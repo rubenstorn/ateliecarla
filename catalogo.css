@@ -51,6 +51,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* o atributo hidden precisa vencer os display: grid/flex das classes */
+[hidden] { display: none !important; }
+
 html { scroll-behavior: smooth; }
 
 body {
