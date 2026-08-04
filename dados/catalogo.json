@@ -1,0 +1,96 @@
+{
+  "_leiaMe": "Fonte única do catálogo. Para trocar preço, duração ou foto, edite SÓ este arquivo — ver dados/README.md.",
+
+  "vigencia": "agosto/2026",
+  "agendamento": "https://agendaagil.com/ateliecarla",
+
+  "midia": {
+    "videoRepigment": {
+      "foto": null,
+      "etiqueta": "capa do vídeo sobre o Método Repigment"
+    }
+  },
+
+  "categorias": [
+    {
+      "id": "design-depilacao",
+      "titulo": "Design & Depilação",
+      "tom": "rosa",
+      "precoPartir": "R$ 5",
+      "tempo": "10 a 35 min",
+      "foto": null,
+      "etiqueta": "foto design",
+      "itens": [
+        { "nome": "Design de sobrancelhas", "preco": "R$ 45", "duracao": "30 min", "foto": null, "etiqueta": "foto design de sobrancelhas" },
+        { "nome": "Design + buço", "preco": "R$ 55", "duracao": "30 min", "foto": null, "etiqueta": "foto design + buço" },
+        { "nome": "Design + buço + nariz", "preco": "R$ 60", "duracao": "30 min", "foto": null, "etiqueta": "foto design + buço + nariz" },
+        { "nome": "Design com aplicação de henna", "preco": "R$ 55", "duracao": "30 min", "foto": null, "etiqueta": "foto henna" },
+        { "nome": "Design e pintura dos pelos brancos", "preco": "R$ 55", "duracao": "30 min", "foto": null, "etiqueta": "foto pelos brancos" },
+        { "nome": "Design + depilação facial", "preco": "R$ 65", "duracao": "35 min", "foto": null, "etiqueta": "foto depilação facial" },
+        { "nome": "Design + buço + nariz + henna", "preco": "R$ 70", "duracao": "30 min", "foto": null, "etiqueta": "foto combo henna" },
+        { "nome": "Depilação facial completa", "preco": "R$ 35", "duracao": "30 min", "foto": null, "etiqueta": "foto facial completa" },
+        { "nome": "Buço", "preco": "R$ 15", "duracao": "10 min", "foto": null, "etiqueta": "foto buço" },
+        { "nome": "Nariz", "preco": "R$ 10", "duracao": "10 min", "foto": null, "etiqueta": "foto nariz" },
+        { "nome": "Orelha", "preco": "R$ 5", "duracao": "15 min", "foto": null, "etiqueta": "foto orelha" },
+        { "nome": "Brow lamination", "preco": "R$ 120", "duracao": "60 min", "foto": null, "etiqueta": "foto brow lamination" }
+      ]
+    },
+    {
+      "id": "micropigmentacao",
+      "titulo": "Micropigmentação",
+      "tom": "lilas",
+      "precoPartir": "R$ 400",
+      "tempo": "2 a 2h30",
+      "foto": null,
+      "etiqueta": "foto sobrancelha",
+      "itens": [
+        { "nome": "Microblading", "preco": "R$ 400", "duracao": "120 min", "foto": null, "etiqueta": "foto microblading" },
+        { "nome": "Nanoblading", "preco": "R$ 400", "duracao": "120 min", "foto": null, "etiqueta": "foto nanoblading" },
+        { "nome": "Micropigmentação shadow", "preco": "R$ 400", "duracao": "120 min", "foto": null, "etiqueta": "foto shadow" },
+        { "nome": "Correção de sobrancelhas · método Repigment", "preco": "R$ 497", "duracao": "150 min", "foto": null, "etiqueta": "foto repigment" }
+      ]
+    },
+    {
+      "id": "olhos",
+      "titulo": "Olhos",
+      "tom": "azul",
+      "precoPartir": "R$ 200",
+      "tempo": "1 a 2h",
+      "foto": null,
+      "etiqueta": "foto delineado",
+      "itens": [
+        { "nome": "Delineado dos olhos · superior", "preco": "R$ 200", "duracao": "60 min", "foto": null, "etiqueta": "foto delineado superior" },
+        { "nome": "Delineado dos olhos · inferior", "preco": "R$ 200", "duracao": "60 min", "foto": null, "etiqueta": "foto delineado inferior" },
+        { "nome": "Delineado dos olhos · superior e inferior", "preco": "R$ 399,90", "duracao": "120 min", "foto": null, "etiqueta": "foto delineado completo" }
+      ]
+    },
+    {
+      "id": "labios",
+      "titulo": "Lábios",
+      "tom": "pink",
+      "precoPartir": "R$ 450",
+      "tempo": "3h",
+      "foto": null,
+      "etiqueta": "foto lábios",
+      "itens": [
+        { "nome": "Micropigmentação labial", "preco": "R$ 450", "duracao": "180 min", "foto": null, "etiqueta": "foto micro labial" },
+        { "nome": "Microlabial", "preco": "R$ 450", "duracao": "190 min", "foto": null, "etiqueta": "foto microlabial" }
+      ]
+    },
+    {
+      "id": "retoques",
+      "titulo": "Retoques",
+      "tom": "ambar",
+      "precoPartir": "R$ 80",
+      "tempo": "40 a 120 min",
+      "foto": null,
+      "etiqueta": "foto retoque",
+      "itens": [
+        { "nome": "Retoque de micro · 30 dias", "preco": "R$ 150", "duracao": "90 min", "foto": null, "etiqueta": "foto retoque micro" },
+        { "nome": "Retoque sobrancelhas · 6 meses ou mais", "preco": "R$ 400", "duracao": "120 min", "foto": null, "etiqueta": "foto retoque sobrancelhas" },
+        { "nome": "Retoque dos olhos · 30 dias", "preco": "R$ 80", "duracao": "40 min", "foto": null, "etiqueta": "foto retoque olhos" },
+        { "nome": "Retoque labial · 45 dias", "preco": "R$ 150", "duracao": "120 min", "foto": null, "etiqueta": "foto retoque labial" }
+      ]
+    }
+  ]
+}

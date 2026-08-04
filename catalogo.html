@@ -4,12 +4,101 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ateliê Carla · sobrancelhas que combinam com o seu rosto</title>
-<meta name="description" content="Micropigmentação e design de sobrancelhas no Ateliê Carla. Microblading, nanoblading, shadow, lábios, delineado e o método Repigment de correção — com tabela de valores completa e agenda online.">
+<meta name="description" content="Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. Microblading, nanoblading, shadow, lábios, delineado e o método Repigment de correção — com tabela de valores completa e agenda online.">
 <link rel="icon" href="assets/logo-atelie-carla.svg" type="image/svg+xml">
+
+<!-- ⚠️ TROCAR "SEU-DOMINIO.com.br" quando a hospedagem estiver definida.
+     São 7 ocorrências neste arquivo: canonical, og:url, og:image,
+     twitter:image e, no JSON-LD mais abaixo, url, image e logo.
+     Um find-replace resolve. Crawlers de WhatsApp/Instagram/Facebook
+     não resolvem caminho relativo — precisa ser URL absoluta. -->
+<link rel="canonical" href="https://SEU-DOMINIO.com.br/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Ateliê Carla Denise">
+<meta property="og:url" content="https://SEU-DOMINIO.com.br/">
+<meta property="og:title" content="Sobrancelhas que combinam com o seu rosto — Ateliê Carla Denise">
+<meta property="og:description" content="Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. +25 anos de experiência, método Repigment de correção e tabela de valores completa.">
+<meta property="og:image" content="https://SEU-DOMINIO.com.br/assets/og-atelie-carla.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ateliê Carla Denise · micropigmentação e design de sobrancelhas em Goiânia">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sobrancelhas que combinam com o seu rosto — Ateliê Carla Denise">
+<meta name="twitter:description" content="Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. +25 anos de experiência e método Repigment de correção.">
+<meta name="twitter:image" content="https://SEU-DOMINIO.com.br/assets/og-atelie-carla.png">
+
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#FAF0DC">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="catalogo.css">
+
+<!-- camada WebGL: import map resolve o especificador "three".
+     Para tirar a dependência de CDN, baixe three.module.js para
+     assets/ e troque a URL abaixo por "assets/three.module.js". -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"
+  }
+}
+</script>
+<link rel="modulepreload" href="webgl/index.js">
+
+<!-- Dados estruturados: é o que alimenta o painel do Google e as buscas
+     "micropigmentação perto de mim". Manter em sincronia com a tabela
+     de valores em catalogo.js. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  "name": "Ateliê Carla Denise",
+  "alternateName": "Ateliê Carla",
+  "description": "Ateliê de micropigmentação e design de sobrancelhas no Setor Bueno, em Goiânia. Microblading, nanoblading, shadow, micropigmentação labial, delineado e o método Repigment de correção.",
+  "url": "https://SEU-DOMINIO.com.br/",
+  "image": "https://SEU-DOMINIO.com.br/assets/og-atelie-carla.png",
+  "logo": "https://SEU-DOMINIO.com.br/assets/logo-atelie-carla.svg",
+  "telephone": "+556235582655",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua B 4, Qd. 2 - Lt. 33, nº 198, casa 4",
+    "addressLocality": "Goiânia",
+    "addressRegion": "GO",
+    "postalCode": "74210-103",
+    "addressCountry": "BR"
+  },
+  "areaServed": { "@type": "City", "name": "Goiânia" },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  ],
+  "priceRange": "R$ 5 - R$ 497",
+  "currenciesAccepted": "BRL",
+  "sameAs": ["https://instagram.com/ateliecarla"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Procedimentos",
+    "itemListElement": [
+      { "@type": "Offer", "price": "45", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Design de sobrancelhas" } },
+      { "@type": "Offer", "price": "120", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Brow lamination" } },
+      { "@type": "Offer", "price": "400", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Microblading" } },
+      { "@type": "Offer", "price": "400", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Nanoblading" } },
+      { "@type": "Offer", "price": "400", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Micropigmentação shadow" } },
+      { "@type": "Offer", "price": "497", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Correção de sobrancelhas · método Repigment" } },
+      { "@type": "Offer", "price": "450", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Micropigmentação labial" } },
+      { "@type": "Offer", "price": "200", "priceCurrency": "BRL", "itemOffered": { "@type": "Service", "name": "Delineado dos olhos" } }
+    ]
+  }
+}
+</script>
 </head>
 <body>
 
@@ -53,6 +142,10 @@
     </nav>
     <dl class="menu__meta">
       <div>
+        <dt>Telefone e WhatsApp</dt>
+        <dd><a class="hoverline" href="tel:+556235582655">(62) 3558-2655</a></dd>
+      </div>
+      <div>
         <dt>Agendamento</dt>
         <dd><a class="hoverline" href="https://agendaagil.com/ateliecarla" target="_blank" rel="noopener">agendaagil.com/ateliecarla</a></dd>
       </div>
@@ -61,8 +154,12 @@
         <dd><a class="hoverline" href="https://instagram.com/ateliecarla" target="_blank" rel="noopener">@ateliecarla</a></dd>
       </div>
       <div>
-        <dt>Localização</dt>
-        <dd><a class="hoverline" href="https://maps.app.goo.gl/LRpb6FpQLk19ujkW7" target="_blank" rel="noopener">Ver no mapa</a></dd>
+        <dt>Endereço</dt>
+        <dd>
+          Rua B 4, Qd. 2 - Lt. 33, nº 198, casa 4<br>
+          Setor Bueno · Goiânia - GO · 74210-103<br>
+          <a class="hoverline" href="https://maps.app.goo.gl/LRpb6FpQLk19ujkW7" target="_blank" rel="noopener">Ver no mapa</a>
+        </dd>
       </div>
     </dl>
   </div>
@@ -72,6 +169,9 @@
 
 <!-- ====================== HERO ====================== -->
 <section class="hero" id="top">
+  <!-- canvas da aura entra aqui; os dois brilhos em CSS abaixo são
+       o fallback e ficam escondidos quando o WebGL assume -->
+  <div class="hero__aura" data-webgl="aura" aria-hidden="true"></div>
   <div class="hero__brilho hero__brilho--roxo" aria-hidden="true"></div>
   <div class="hero__brilho hero__brilho--marrom" aria-hidden="true"></div>
 
@@ -134,19 +234,19 @@
         <dl class="numeros">
           <div>
             <dt>+25 anos</dt>
-            <dd>de experiência em PMU</dd>
+            <dd>de arte e experiência em PMU</dd>
           </div>
           <div>
             <dt>15 mil</dt>
             <dd>seguidores no Instagram</dd>
           </div>
           <div>
-            <dt>Repigment</dt>
-            <dd>método de correção certificado</dd>
+            <dt>Nanoblading</dt>
+            <dd>fios hiper-realistas e naturais</dd>
           </div>
           <div>
-            <dt>30 dias</dt>
-            <dd>retoque acompanhado</dd>
+            <dt>100%</dt>
+            <dd>pigmentos orgânicos e seguros</dd>
           </div>
         </dl>
       </div>
@@ -319,12 +419,22 @@
         <svg class="icone" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         Ver trabalhos no Instagram
       </a>
+      <a class="botao botao--fantasma" href="https://wa.me/556235582655" target="_blank" rel="noopener">
+        <svg class="icone" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+        (62) 3558-2655
+      </a>
       <a class="botao botao--fantasma" href="https://maps.app.goo.gl/LRpb6FpQLk19ujkW7" target="_blank" rel="noopener">
         <svg class="icone" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
         Ver localização
       </a>
     </div>
-    <p class="agendar__nota rv">Atendimento com hora marcada · seg a sáb</p>
+
+    <address class="agendar__endereco rv">
+      Rua B 4, Qd. 2 - Lt. 33, nº 198, casa 4 · Setor Bueno<br>
+      Goiânia - GO · CEP 74210-103
+    </address>
+
+    <p class="agendar__nota rv">Atendimento com hora marcada · terça a sexta, 9h às 18h</p>
   </div>
 </section>
 
@@ -336,15 +446,24 @@
     <img src="assets/logo-atelie-carla.svg" alt="Ateliê Carla" width="448" height="221">
     <span>PMU &amp; Design de Sobrancelhas · © 2026</span>
   </div>
+
+  <address class="rodape__contato">
+    <a class="rodape__tel" href="tel:+556235582655">(62) 3558-2655</a>
+    <span>Rua B 4, Qd. 2 - Lt. 33, nº 198, casa 4 · Setor Bueno</span>
+    <span>Goiânia - GO · CEP 74210-103</span>
+  </address>
+
   <nav class="rodape__links" aria-label="Navegação do rodapé">
     <a href="#procedimentos">Procedimentos</a>
     <a href="#atelie">O ateliê</a>
     <a href="#repigment">Método Repigment</a>
+    <a href="https://wa.me/556235582655" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://instagram.com/ateliecarla" target="_blank" rel="noopener">@ateliecarla</a>
     <a href="https://maps.app.goo.gl/LRpb6FpQLk19ujkW7" target="_blank" rel="noopener">Localização</a>
   </nav>
 </footer>
 
 <script src="catalogo.js"></script>
+<script type="module" src="webgl/index.js"></script>
 </body>
 </html>

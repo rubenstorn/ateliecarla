@@ -293,9 +293,23 @@ h1, h2, p { margin: 0; }
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 140px var(--gutter) 52px;
 }
+/* container do canvas WebGL — cobre o hero inteiro, atrás do conteúdo */
+.hero__aura {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero__brilho {
   position: absolute; border-radius: 50%;
   filter: blur(40px); pointer-events: none;
+}
+
+/* quando a aura em WebGL assume, os brilhos de fallback saem de cena.
+   A transição evita o "pulo" no momento em que o shader entra. */
+[data-webgl="on"] .hero__brilho {
+  opacity: 0;
+  transition: opacity .9s var(--suave);
 }
 .hero__brilho--roxo {
   right: -16%; top: -18%; width: 70vw; height: 70vw;
@@ -653,6 +667,29 @@ h1, h2, p { margin: 0; }
   border-radius: 12px; padding: 8px;
 }
 
+/* ---- foto real: entra no lugar do placeholder quando o campo
+   "foto" é preenchido em dados/catalogo.json ---- */
+
+.placeholder__img {
+  display: block; width: 100%;
+  object-fit: cover; object-position: center;
+  padding: 0; background: none;
+}
+.placeholder__img.placeholder--capa { height: 180px; }
+.placeholder__img.placeholder--quadro { width: 82px; height: 82px; flex: none; border-radius: 12px; }
+
+/* ---- aviso de tabela indisponível (JSON não carregou) ---- */
+
+.catalogo__erro {
+  grid-column: 1 / -1;
+  margin: 0; padding: 26px 28px;
+  border-radius: 14px;
+  background: rgba(115, 76, 128, .06);
+  border: 1px solid rgba(115, 76, 128, .18);
+  font-size: 15px; line-height: 1.6; color: var(--texto-2);
+}
+.catalogo__erro a { color: var(--roxo); text-decoration: underline; text-underline-offset: 3px; }
+
 /* ---- grade de categorias ---- */
 
 .catalogo { margin-top: 48px; }
@@ -828,6 +865,13 @@ h1, h2, p { margin: 0; }
   display: flex; align-items: center; justify-content: center;
   gap: 16px; flex-wrap: wrap; margin-top: 46px;
 }
+.agendar__endereco {
+  margin-top: 34px;
+  font-style: normal;
+  font-size: 14.5px; line-height: 1.65;
+  color: var(--creme-70);
+}
+
 .agendar__nota {
   margin-top: 26px;
   font-family: var(--mono); font-size: 11.5px;
@@ -846,6 +890,17 @@ h1, h2, p { margin: 0; }
 .rodape__marca { display: flex; align-items: center; gap: 16px; }
 .rodape__marca img { height: 56px; width: auto; filter: brightness(0) invert(1); opacity: .9; }
 .rodape__marca span { font-size: 13.5px; color: rgba(250, 240, 220, .5); }
+.rodape__contato {
+  display: flex; flex-direction: column; gap: 5px;
+  font-style: normal; font-size: 13.5px; line-height: 1.5;
+  color: rgba(250, 240, 220, .5);
+}
+.rodape__tel {
+  font-size: 16px; color: var(--creme-70);
+  transition: color .3s var(--suave);
+}
+.rodape__tel:hover { color: var(--lilas); }
+
 .rodape__links { display: flex; gap: 28px; flex-wrap: wrap; font-size: 13.5px; }
 .rodape__links a { color: var(--creme-70); transition: color .3s var(--suave); }
 .rodape__links a:hover { color: var(--lilas); }

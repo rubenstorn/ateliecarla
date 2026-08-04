@@ -6,89 +6,22 @@
 (function () {
   'use strict';
 
-  var AGENDA = 'https://agendaagil.com/ateliecarla';
-
   /* ---------------------------------------------------------
-     Dados — categorias e seus procedimentos
+     Dados
+
+     Preços, durações e fotos moram em dados/catalogo.json —
+     esta é a única fonte. Não edite listas aqui dentro.
+     Ver dados/README.md.
+
+     IMPORTANTE: o fetch exige que a página seja servida por
+     http:// (o launch.json do projeto já faz isso). Abrir o
+     catalogo.html com duplo clique (file://) faz o navegador
+     bloquear a leitura do JSON por CORS — nesse caso a tabela
+     mostra um aviso com o link do agendamento.
      --------------------------------------------------------- */
 
-  var CATEGORIAS = [
-    {
-      id: 'design-depilacao',
-      titulo: 'Design & Depilação',
-      etiqueta: 'foto design',
-      precoPartir: 'R$ 5',
-      tempo: '10 a 35 min',
-      tom: 'rosa',
-      itens: [
-        { nome: 'Design de sobrancelhas', preco: 'R$ 45', duracao: '30 min', foto: 'foto design de sobrancelhas' },
-        { nome: 'Design + buço', preco: 'R$ 55', duracao: '30 min', foto: 'foto design + buço' },
-        { nome: 'Design + buço + nariz', preco: 'R$ 60', duracao: '30 min', foto: 'foto design + buço + nariz' },
-        { nome: 'Design com aplicação de henna', preco: 'R$ 55', duracao: '30 min', foto: 'foto henna' },
-        { nome: 'Design e pintura dos pelos brancos', preco: 'R$ 55', duracao: '30 min', foto: 'foto pelos brancos' },
-        { nome: 'Design + depilação facial', preco: 'R$ 65', duracao: '35 min', foto: 'foto depilação facial' },
-        { nome: 'Design + buço + nariz + henna', preco: 'R$ 70', duracao: '30 min', foto: 'foto combo henna' },
-        { nome: 'Depilação facial completa', preco: 'R$ 35', duracao: '30 min', foto: 'foto facial completa' },
-        { nome: 'Buço', preco: 'R$ 15', duracao: '10 min', foto: 'foto buço' },
-        { nome: 'Nariz', preco: 'R$ 10', duracao: '10 min', foto: 'foto nariz' },
-        { nome: 'Orelha', preco: 'R$ 5', duracao: '15 min', foto: 'foto orelha' },
-        { nome: 'Brow lamination', preco: 'R$ 120', duracao: '60 min', foto: 'foto brow lamination' }
-      ]
-    },
-    {
-      id: 'micropigmentacao',
-      titulo: 'Micropigmentação',
-      etiqueta: 'foto sobrancelha',
-      precoPartir: 'R$ 400',
-      tempo: '2 a 2h30',
-      tom: 'lilas',
-      itens: [
-        { nome: 'Microblading', preco: 'R$ 400', duracao: '120 min', foto: 'foto microblading' },
-        { nome: 'Nanoblading', preco: 'R$ 400', duracao: '120 min', foto: 'foto nanoblading' },
-        { nome: 'Micropigmentação shadow', preco: 'R$ 400', duracao: '120 min', foto: 'foto shadow' },
-        { nome: 'Correção de sobrancelhas · método Repigment', preco: 'R$ 497', duracao: '150 min', foto: 'foto repigment' }
-      ]
-    },
-    {
-      id: 'olhos',
-      titulo: 'Olhos',
-      etiqueta: 'foto delineado',
-      precoPartir: 'R$ 200',
-      tempo: '1 a 2h',
-      tom: 'azul',
-      itens: [
-        { nome: 'Delineado dos olhos · superior', preco: 'R$ 200', duracao: '60 min', foto: 'foto delineado superior' },
-        { nome: 'Delineado dos olhos · inferior', preco: 'R$ 200', duracao: '60 min', foto: 'foto delineado inferior' },
-        { nome: 'Delineado dos olhos · superior e inferior', preco: 'R$ 399,90', duracao: '120 min', foto: 'foto delineado completo' }
-      ]
-    },
-    {
-      id: 'labios',
-      titulo: 'Lábios',
-      etiqueta: 'foto lábios',
-      precoPartir: 'R$ 450',
-      tempo: '3h',
-      tom: 'pink',
-      itens: [
-        { nome: 'Micropigmentação labial', preco: 'R$ 450', duracao: '180 min', foto: 'foto micro labial' },
-        { nome: 'Microlabial', preco: 'R$ 450', duracao: '190 min', foto: 'foto microlabial' }
-      ]
-    },
-    {
-      id: 'retoques',
-      titulo: 'Retoques',
-      etiqueta: 'foto retoque',
-      precoPartir: 'R$ 80',
-      tempo: '40 a 120 min',
-      tom: 'ambar',
-      itens: [
-        { nome: 'Retoque de micro · 30 dias', preco: 'R$ 150', duracao: '90 min', foto: 'foto retoque micro' },
-        { nome: 'Retoque sobrancelhas · 6 meses ou mais', preco: 'R$ 400', duracao: '120 min', foto: 'foto retoque sobrancelhas' },
-        { nome: 'Retoque dos olhos · 30 dias', preco: 'R$ 80', duracao: '40 min', foto: 'foto retoque olhos' },
-        { nome: 'Retoque labial · 45 dias', preco: 'R$ 150', duracao: '120 min', foto: 'foto retoque labial' }
-      ]
-    }
-  ];
+  var FONTE = 'dados/catalogo.json';
+  var AGENDA = 'https://agendaagil.com/ateliecarla';   /* reserva; o JSON manda */
 
   var $ = function (sel, raiz) { return (raiz || document).querySelector(sel); };
   var reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -196,7 +129,7 @@
      Catálogo — categorias › procedimentos › agendar
      --------------------------------------------------------- */
 
-  (function catalogo() {
+  function catalogo(dados) {
     var grade = $('[data-categorias]');
     var detalhe = $('[data-detalhe]');
     var contagem = $('[data-contagem]');
@@ -207,6 +140,7 @@
     var secao = $('#procedimentos');
     if (!grade || !detalhe) return;
 
+    var CATEGORIAS = dados.categorias || [];
     var escolhido = null;
 
     /* placeholder de foto: pastel + hachuras + etiqueta */
@@ -216,6 +150,34 @@
       caixa.setAttribute('aria-label', rotulo);
       caixa.appendChild(criar('span', 'placeholder__etiqueta', rotulo));
       return caixa;
+    };
+
+    /* Mídia: devolve <img> quando o registro tem "foto" no JSON,
+       senão devolve o placeholder pastel. É este ponto único que
+       faz as fotos reais entrarem — basta preencher o campo.
+
+       Sem width/height de propósito: o CSS já fixa a caixa
+       (.placeholder--capa tem altura fixa, --quadro é 82×82),
+       então não há salto de layout a evitar. */
+    var midia = function (registro, tom, classe) {
+      if (!registro || !registro.foto) {
+        return placeholder((registro && registro.etiqueta) || 'foto', tom, classe);
+      }
+
+      var img = criar('img', 'placeholder__img' + (classe ? ' ' + classe : ''));
+      img.src = registro.foto;
+      img.alt = registro.alt || registro.nome || registro.titulo || registro.etiqueta || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      /* se o arquivo faltar, cai no placeholder em vez de ícone quebrado */
+      img.addEventListener('error', function () {
+        if (img.parentNode) {
+          img.parentNode.replaceChild(placeholder(registro.etiqueta || 'foto', tom, classe), img);
+        }
+      });
+
+      return img;
     };
 
     var mostrarCta = function (item) {
@@ -232,7 +194,7 @@
 
     var montarCard = function (cat) {
       var card = criar('article', 'card-cat');
-      card.appendChild(placeholder(cat.etiqueta, cat.tom, 'placeholder--capa'));
+      card.appendChild(midia(cat, cat.tom, 'placeholder--capa'));
 
       var corpo = criar('div', 'card-cat__corpo');
       corpo.appendChild(criar('h3', 'card-cat__titulo', cat.titulo));
@@ -259,7 +221,8 @@
       grade.hidden = false;
       mostrarCta(null);
       var total = CATEGORIAS.reduce(function (s, c) { return s + c.itens.length; }, 0);
-      contagem.textContent = total + ' procedimentos · valores de agosto/2026';
+      contagem.textContent = total + ' procedimentos' +
+        (dados.vigencia ? ' · valores de ' + dados.vigencia : '');
     };
 
     /* ---- visão 2: procedimentos da categoria ---- */
@@ -270,7 +233,7 @@
       botao.type = 'button';
       botao.setAttribute('aria-pressed', 'false');
 
-      botao.appendChild(placeholder(item.foto, cat.tom, 'placeholder--quadro'));
+      botao.appendChild(midia(item, cat.tom, 'placeholder--quadro'));
 
       var texto = criar('div', 'item-proc__texto');
       texto.appendChild(criar('h4', 'item-proc__nome', item.nome));
@@ -326,9 +289,71 @@
       secao.scrollIntoView({ behavior: reduzido ? 'auto' : 'smooth', block: 'start' });
     };
 
-    ctaLink.href = AGENDA;
+    ctaLink.href = dados.agendamento || AGENDA;
     CATEGORIAS.forEach(function (cat) { grade.appendChild(montarCard(cat)); });
     mostrarCategorias();
+  }
+
+  /* ---------------------------------------------------------
+     Capa do vídeo do Repigment
+
+     Enquanto midia.videoRepigment.foto for null no JSON, fica o
+     degradê .video__vazio que já está no HTML.
+     --------------------------------------------------------- */
+
+  function capaDoVideo(dados) {
+    var caixa = $('.video');
+    var vazio = $('.video__vazio');
+    var registro = (dados.midia || {}).videoRepigment;
+    if (!caixa || !vazio || !registro || !registro.foto) return;
+
+    var img = criar('img', 'video__capa');
+    img.src = registro.foto;
+    img.alt = registro.alt || registro.etiqueta || 'Método Repigment';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.addEventListener('error', function () { img.remove(); vazio.hidden = false; });
+
+    vazio.hidden = true;
+    caixa.insertBefore(img, caixa.firstChild);
+  }
+
+  /* ---------------------------------------------------------
+     Carga dos dados
+
+     Se o JSON não vier, a seção mostra um aviso com o link do
+     agendamento em vez de ficar vazia sem explicação.
+     --------------------------------------------------------- */
+
+  (function carregar() {
+    var grade = $('[data-categorias]');
+    if (!grade) return;
+
+    fetch(FONTE, { cache: 'no-cache' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (dados) {
+        catalogo(dados);
+        capaDoVideo(dados);
+      })
+      .catch(function (erro) {
+        var aviso = criar('p', 'catalogo__erro');
+        aviso.append('Não foi possível carregar a tabela de valores. ');
+        var link = criar('a', null, 'Ver procedimentos e valores na agenda online');
+        link.href = AGENDA;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        aviso.appendChild(link);
+        grade.appendChild(aviso);
+
+        var contagem = $('[data-contagem]');
+        if (contagem) contagem.textContent = 'tabela indisponível';
+
+        /* deixa rastro para diagnóstico: quase sempre é file:// ou caminho errado */
+        console.error('[catálogo] falha ao ler ' + FONTE + ':', erro.message);
+      });
   }());
 
   /* ---------------------------------------------------------

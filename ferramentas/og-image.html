@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerador da imagem de compartilhamento · Ateliê Carla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --papel: #FAF0DC; --tinta: #1B1714; --roxo: #734C80; --marrom: #684322;
+    --sans: 'Instrument Sans', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px; background: #F3F0ED; color: var(--tinta);
+    font-family: var(--sans); line-height: 1.6;
+  }
+  .caixa { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 26px; letter-spacing: -.02em; margin: 0 0 6px; }
+  .sub { color: rgba(27,23,20,.6); font-size: 15px; margin: 0 0 28px; }
+  canvas {
+    width: 100%; height: auto; display: block;
+    border: 1px solid rgba(27,23,20,.14); border-radius: 8px;
+    box-shadow: 0 20px 50px -30px rgba(27,23,20,.5);
+  }
+  .acoes { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 22px 0; }
+  button, label.botao {
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 14px 24px; border: 0; border-radius: 999px;
+    background: var(--tinta); color: var(--papel); cursor: pointer;
+    transition: background .25s;
+  }
+  button:hover, label.botao:hover { background: var(--roxo); }
+  label.secundario { background: transparent; color: var(--tinta); border: 1px solid rgba(27,23,20,.2); }
+  label.secundario:hover { background: rgba(115,76,128,.08); color: var(--tinta); }
+  input[type=file] { display: none; }
+  .nota {
+    font-family: var(--mono); font-size: 12px; line-height: 1.8;
+    background: #fff; border: 1px solid rgba(27,23,20,.1);
+    border-radius: 8px; padding: 18px 20px; margin-top: 26px;
+  }
+  code { background: rgba(115,76,128,.1); padding: 2px 6px; border-radius: 4px; }
+  .status { font-family: var(--mono); font-size: 12px; color: var(--marrom); }
+</style>
+</head>
+<body>
+<div class="caixa">
+  <h1>Imagem de compartilhamento</h1>
+  <p class="sub">
+    É o que aparece quando o link do site é colado no WhatsApp, no Instagram ou no Facebook.
+    Formato exigido: 1200×630. Gere uma vez e salve em <code>assets/og-atelie-carla.png</code>.
+  </p>
+
+  <canvas id="tela" width="1200" height="630"></canvas>
+
+  <div class="acoes">
+    <button id="baixar" type="button">Baixar PNG</button>
+    <label class="botao secundario" for="foto">Usar uma foto de fundo</label>
+    <input id="foto" type="file" accept="image/*">
+    <button id="limpar" type="button" class="secundario" style="background:transparent;color:var(--tinta);border:1px solid rgba(27,23,20,.2)">Sem foto</button>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div class="nota">
+    <strong>Depois de baixar:</strong><br>
+    1. Salve o arquivo como <code>assets/og-atelie-carla.png</code><br>
+    2. No <code>catalogo.html</code>, troque <code>SEU-DOMINIO.com.br</code> pelo domínio real
+       (7 ocorrências: canonical, og:url, og:image, twitter:image + url, image e logo no JSON-LD)<br>
+    3. Teste em <code>developers.facebook.com/tools/debug</code> — o WhatsApp usa o mesmo cache<br><br>
+    <strong>Com foto:</strong> escolha uma foto na horizontal, de preferência um trabalho
+    finalizado em close. A foto entra escurecida à direita para o texto continuar legível.
+  </div>
+</div>
+
+<script>
+const tela = document.getElementById('tela');
+const ctx = tela.getContext('2d');
+const status = document.getElementById('status');
+const W = 1200, H = 630;
+let foto = null;
+
+function desenharFundo() {
+  ctx.fillStyle = '#FAF0DC';
+  ctx.fillRect(0, 0, W, H);
+
+  if (foto) {
+    /* cobre o canvas mantendo a proporção (object-fit: cover) */
+    const escala = Math.max(W / foto.naturalWidth, H / foto.naturalHeight);
+    const lw = foto.naturalWidth * escala;
+    const lh = foto.naturalHeight * escala;
+    ctx.drawImage(foto, (W - lw) / 2, (H - lh) / 2, lw, lh);
+
+    /* véu para o texto continuar legível sobre qualquer foto */
+    const veu = ctx.createLinearGradient(0, 0, W, 0);
+    veu.addColorStop(0, 'rgba(250,240,220,.97)');
+    veu.addColorStop(0.52, 'rgba(250,240,220,.86)');
+    veu.addColorStop(1, 'rgba(250,240,220,.28)');
+    ctx.fillStyle = veu;
+    ctx.fillRect(0, 0, W, H);
+    return;
+  }
+
+  /* sem foto: as auras da marca, como no hero do site */
+  const g1 = ctx.createRadialGradient(W * .86, H * .12, 0, W * .86, H * .12, W * .55);
+  g1.addColorStop(0, 'rgba(115,76,128,.30)');
+  g1.addColorStop(1, 'rgba(115,76,128,0)');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0, 0, W, H);
+
+  const g2 = ctx.createRadialGradient(W * .08, H * .95, 0, W * .08, H * .95, W * .5);
+  g2.addColorStop(0, 'rgba(104,67,34,.22)');
+  g2.addColorStop(1, 'rgba(104,67,34,0)');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0, 0, W, H);
+}
+
+async function desenhar() {
+  await document.fonts.ready;
+  desenharFundo();
+
+  /* logo */
+  const logo = new Image();
+  logo.src = '../assets/logo-atelie-carla.svg';
+
+  try {
+    await new Promise((ok, erro) => { logo.onload = ok; logo.onerror = erro; });
+    const lw = 300;
+    ctx.drawImage(logo, 84, 74, lw, lw * (logo.naturalHeight / logo.naturalWidth));
+  } catch (e) {
+    status.textContent = 'logo não carregou — abra esta página pelo servidor, não pelo file://';
+  }
+
+  /* título: sans em peso 600 + palavra-chave em serifa itálica */
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#1B1714';
+  ctx.font = '600 62px "Instrument Sans", sans-serif';
+  ctx.fillText('Sobrancelhas que combinam', 84, 300);
+  ctx.fillText('com o', 84, 372);
+
+  const largura = ctx.measureText('com o ').width;
+  ctx.font = 'italic 62px "Instrument Serif", Georgia, serif';
+  ctx.fillStyle = '#734C80';
+  ctx.fillText('seu rosto', 84 + largura, 372);
+
+  /* subtítulo */
+  ctx.fillStyle = 'rgba(27,23,20,.62)';
+  ctx.font = '400 27px "Instrument Sans", sans-serif';
+  ctx.fillText('Micropigmentação e design de sobrancelhas · Setor Bueno, Goiânia', 84, 436);
+
+  /* faixa inferior com telefone e @ */
+  ctx.fillStyle = '#1B1714';
+  ctx.fillRect(0, H - 84, W, 84);
+
+  ctx.fillStyle = '#FAF0DC';
+  ctx.font = '500 24px "Instrument Sans", sans-serif';
+  ctx.fillText('+25 anos de experiência', 84, H - 32);
+
+  ctx.fillStyle = 'rgba(250,240,220,.66)';
+  ctx.font = '400 24px "Instrument Sans", sans-serif';
+  const contato = '(62) 3558-2655  ·  @ateliecarla';
+  ctx.fillText(contato, W - 84 - ctx.measureText(contato).width, H - 32);
+}
+
+document.getElementById('baixar').addEventListener('click', () => {
+  tela.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'og-atelie-carla.png';
+    a.click();
+    URL.revokeObjectURL(url);
+    status.textContent = Math.round(blob.size / 1024) + ' KB — salve em assets/';
+  }, 'image/png');
+});
+
+document.getElementById('foto').addEventListener('change', (ev) => {
+  const arquivo = ev.target.files[0];
+  if (!arquivo) return;
+
+  const img = new Image();
+  img.onload = () => { foto = img; desenhar(); status.textContent = 'foto aplicada'; };
+  img.src = URL.createObjectURL(arquivo);
+});
+
+document.getElementById('limpar').addEventListener('click', () => {
+  foto = null;
+  desenhar();
+  status.textContent = '';
+});
+
+desenhar();
+</script>
+</body>
+</html>
