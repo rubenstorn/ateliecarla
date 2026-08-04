@@ -3,3 +3,4 @@ node_modules/
 Thumbs.db
 _harness.html
 *.log
+.claude/settings.local.json
