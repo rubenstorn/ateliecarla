@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 132" width="400" height="132" role="img" aria-label="Carla Denise · PMU Artist">
+  <title>Carla Denise · PMU Artist</title>
+  <defs>
+    <path id="pmu-arc" d="M 330 96 A 42 42 0 1 1 396 62" fill="none"/>
+  </defs>
+
+  <text x="0" y="62"
+        font-family="'Instrument Serif', Georgia, 'Times New Roman', serif"
+        font-size="66" fill="#5B534D" letter-spacing="-1">Carla</text>
+
+  <text x="2" y="116"
+        font-family="'Instrument Serif', Georgia, 'Times New Roman', serif"
+        font-size="66" fill="#5B534D" letter-spacing="-1">Denise</text>
+
+  <text font-family="'JetBrains Mono', 'Courier New', monospace"
+        font-size="15" font-weight="500" fill="#C9BBA6" letter-spacing="3">
+    <textPath href="#pmu-arc" startOffset="4%">PMU ARTIST</textPath>
+  </text>
+</svg>
