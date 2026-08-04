@@ -236,7 +236,7 @@ a:hover { color: var(--roxo-escuro); }
   pointer-events: none;
 }
 
-.marca__img { position: relative; height: 52px; width: auto; display: block; }
+.marca__img { position: relative; height: 68px; width: auto; display: block; }
 
 .menu {
   display: flex;
@@ -930,7 +930,7 @@ a:hover { color: var(--roxo-escuro); }
   flex-wrap: wrap;
 }
 .rodape__marca { display: flex; align-items: center; gap: 14px; }
-.rodape__marca img { height: 38px; width: auto; display: block; }
+.rodape__marca img { height: 50px; width: auto; display: block; }
 .rodape__marca span { font-size: 14px; color: var(--ink-suave); }
 
 .rodape__links { display: flex; gap: 26px; flex-wrap: wrap; font-size: 14px; }

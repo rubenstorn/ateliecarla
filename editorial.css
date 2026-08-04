@@ -196,7 +196,7 @@ a { color: inherit; text-decoration: none; }
 
 .cabecalho.rolou { border-bottom-color: var(--linha-fraca); }
 
-.cabecalho__marca img { height: clamp(30px, 3.4vw, 42px); width: auto; }
+.cabecalho__marca img { height: clamp(40px, 4.2vw, 56px); width: auto; }
 
 .cabecalho__menu {
   display: flex;
@@ -745,7 +745,7 @@ a { color: inherit; text-decoration: none; }
   gap: clamp(28px, 4vw, 56px);
 }
 
-.rodape__marca img { height: 40px; width: auto; }
+.rodape__marca img { height: 52px; width: auto; }
 .rodape__marca p { margin-top: 18px; max-width: 22em; font-size: 14px; line-height: 1.6; color: var(--tinta-70); }
 
 .rodape__coluna h3 { margin-bottom: 16px; }
