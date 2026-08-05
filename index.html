@@ -3,15 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ateliê Carla · sobrancelhas que combinam com o seu rosto</title>
-<meta name="description" content="Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. Microblading, nanoblading, shadow, lábios, delineado e o método Repigment de correção — com tabela de valores completa e agenda online.">
 <link rel="icon" href="assets/logo-atelie-carla.svg" type="image/svg+xml">
 
-<!-- ⚠️ TROCAR "SEU-DOMINIO.com.br" quando a hospedagem estiver definida.
-     São 7 ocorrências neste arquivo: canonical, og:url, og:image,
-     twitter:image e, no JSON-LD mais abaixo, url, image e logo.
-     Um find-replace resolve. Crawlers de WhatsApp/Instagram/Facebook
-     não resolvem caminho relativo — precisa ser URL absoluta. -->
+<!-- @gerado:seo — bloco reescrito por backend/publicar.js a partir da
+     tabela "seo" do banco. Editar à mão funciona; o script sobrescreve
+     na próxima execução.
+
+     ⚠️ TROCAR "SEU-DOMINIO.com.br" quando a hospedagem estiver definida
+     (ou preencher o campo "Endereço oficial do site" no painel e rodar o
+     script). Crawlers de WhatsApp/Instagram/Facebook não resolvem caminho
+     relativo — precisa ser URL absoluta. -->
+<title>Ateliê Carla · sobrancelhas que combinam com o seu rosto</title>
+<meta name="description" content="Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. Microblading, nanoblading, shadow, lábios, delineado e o método Repigment de correção — com tabela de valores completa e agenda online.">
 <link rel="canonical" href="https://SEU-DOMINIO.com.br/">
 
 <meta property="og:type" content="website">
@@ -29,13 +32,14 @@
 <meta name="twitter:title" content="Sobrancelhas que combinam com o seu rosto — Ateliê Carla Denise">
 <meta name="twitter:description" content="Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. +25 anos de experiência e método Repigment de correção.">
 <meta name="twitter:image" content="https://SEU-DOMINIO.com.br/assets/og-atelie-carla.png">
+<!-- @/gerado:seo -->
 
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#FAF0DC">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="catalogo.css">
+<link rel="stylesheet" href="index.css">
 
 <!-- camada WebGL: import map resolve o especificador "three".
      Para tirar a dependência de CDN, baixe three.module.js para
@@ -51,7 +55,7 @@
 
 <!-- Dados estruturados: é o que alimenta o painel do Google e as buscas
      "micropigmentação perto de mim". Manter em sincronia com a tabela
-     de valores em catalogo.js. -->
+     de valores em index.js. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -177,12 +181,15 @@
 
   <div class="hero__interno">
     <p class="rotulo hero__rotulo">Micropigmentação · Design de sobrancelhas</p>
+    <!-- @gerado:hero-titulo — bloco reescrito por backend/publicar.js.
+         Editar à mão aqui é permitido; o script sobrescreve na próxima vez. -->
     <h1 class="hero__titulo">
       <span><span>Sobrancelhas</span></span>
       <span><span>que combinam</span></span>
       <span><span>com o seu rosto,</span></span>
       <span><span><em class="italico">não com o molde.</em></span></span>
     </h1>
+    <!-- @/gerado:hero-titulo -->
     <div class="hero__rodape">
       <p class="hero__texto">
         Cada traço é desenhado a partir do formato do seu rosto, do seu tom de pele e da sua rotina — e aprovado por você antes de começar.
@@ -438,6 +445,93 @@
   </div>
 </section>
 
+<!-- ====================== GALERIA DE VÍDEOS ======================
+     Começa oculta e só aparece se houver vídeo publicado no painel.
+     Preenchida por api/landing.js. -->
+<section class="secao-conteudo videos" id="videos" data-secao-videos hidden>
+  <div class="secao-conteudo__interno">
+    <p class="rotulo rv">Em vídeo</p>
+    <h2 class="secao-conteudo__titulo rv">veja <em class="italico">como funciona</em></h2>
+    <div class="videos__grade" data-grade-videos></div>
+  </div>
+</section>
+
+<!-- ====================== GALERIA DE IMAGENS ======================
+     Mesma regra: oculta até existir imagem publicada no grupo "galeria". -->
+<section class="secao-conteudo galeria" id="galeria" data-secao-galeria hidden>
+  <div class="secao-conteudo__interno">
+    <p class="rotulo rv">Trabalhos do ateliê</p>
+    <h2 class="secao-conteudo__titulo rv">antes <em class="italico">e depois</em></h2>
+    <div class="galeria__grade" data-grade-galeria></div>
+  </div>
+</section>
+
+<!-- ====================== FORMULÁRIO DE CONTATO ====================== -->
+<section class="secao-conteudo contato" id="contato">
+  <div class="contato__interno">
+    <div class="contato__texto">
+      <p class="rotulo rv">Prefere que a gente chame você?</p>
+      <h2 class="secao-conteudo__titulo rv">deixe seu <em class="italico">contato</em></h2>
+      <p class="contato__ajuda rv">
+        Se ficou com dúvida sobre qual procedimento combina com você, deixe o telefone
+        que a Carla responde pessoalmente — normalmente no mesmo dia.
+      </p>
+      <p class="contato__direto rv">
+        Se preferir resolver agora:
+        <a href="https://wa.me/556235582655" target="_blank" rel="noopener">WhatsApp (62) 3558-2655</a>
+      </p>
+    </div>
+
+    <form class="contato__form rv" data-form-lead novalidate>
+      <!-- campo-isca contra robô: escondido para humanos -->
+      <input type="text" name="_isca" tabindex="-1" autocomplete="off"
+             aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+
+      <label class="campo-lead">
+        <span>Seu nome</span>
+        <input type="text" name="nome" required minlength="2" maxlength="150" autocomplete="name">
+      </label>
+
+      <label class="campo-lead">
+        <span>WhatsApp com DDD</span>
+        <input type="tel" name="telefone" required maxlength="20"
+               inputmode="tel" autocomplete="tel" placeholder="(62) 90000-0000">
+      </label>
+
+      <label class="campo-lead">
+        <span>E-mail <em>(opcional)</em></span>
+        <input type="email" name="email" maxlength="200" autocomplete="email">
+      </label>
+
+      <label class="campo-lead">
+        <span>O que te interessa?</span>
+        <select name="procedimento">
+          <option value="">ainda não sei / quero orientação</option>
+          <option>Design de sobrancelhas</option>
+          <option>Micropigmentação (microblading, nanoblading, shadow)</option>
+          <option>Correção · método Repigment</option>
+          <option>Micropigmentação labial</option>
+          <option>Delineado dos olhos</option>
+          <option>Retoque</option>
+        </select>
+      </label>
+
+      <label class="campo-lead">
+        <span>Mensagem <em>(opcional)</em></span>
+        <textarea name="mensagem" rows="3" maxlength="2000"></textarea>
+      </label>
+
+      <button class="botao botao--tinta" type="submit" data-lead-enviar>Quero ser chamada</button>
+
+      <p class="contato__aviso" data-lead-aviso hidden></p>
+
+      <p class="contato__lgpd">
+        Seus dados são usados só para este contato e não são compartilhados.
+      </p>
+    </form>
+  </div>
+</section>
+
 </main>
 
 <!-- ====================== RODAPÉ ====================== -->
@@ -463,7 +557,9 @@
   </nav>
 </footer>
 
-<script src="catalogo.js"></script>
+<script src="index.js"></script>
 <script type="module" src="webgl/index.js"></script>
+<!-- ligação com o backend: melhoria progressiva, a página funciona sem -->
+<script type="module" src="api/landing.js"></script>
 </body>
 </html>

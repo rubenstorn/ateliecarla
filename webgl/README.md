@@ -48,7 +48,7 @@ contextos); não tente compartilhar um canvas entre pontos distantes do DOM.
 
 Substitui os dois `.hero__brilho` do CSS (`radial-gradient` + `blur(40px)`) por
 um quad de tela cheia com fbm noise, nas cores da marca lidas direto dos
-tokens `--papel`, `--roxo` e `--marrom` do `catalogo.css`.
+tokens `--papel`, `--roxo` e `--marrom` do `index.css`.
 
 Ganho real: `filter: blur(40px)` em duas camadas de 70vw obriga o navegador a
 rasterizar e desfocar duas texturas enormes a cada repaint. O shader faz o
@@ -133,7 +133,7 @@ mesma abordagem.
 ## Dependência
 
 O three vem por CDN, resolvido pelo `<script type="importmap">` no
-`catalogo.html`, pinado em `0.169.0`. Para eliminar a dependência externa,
+`index.html`, pinado em `0.169.0`. Para eliminar a dependência externa,
 baixe o arquivo e troque a URL:
 
 ```bash

@@ -15,7 +15,7 @@
 
      IMPORTANTE: o fetch exige que a página seja servida por
      http:// (o launch.json do projeto já faz isso). Abrir o
-     catalogo.html com duplo clique (file://) faz o navegador
+     index.html com duplo clique (file://) faz o navegador
      bloquear a leitura do JSON por CORS — nesse caso a tabela
      mostra um aviso com o link do agendamento.
      --------------------------------------------------------- */

@@ -15,7 +15,7 @@ import { vertPlano, fragAura } from './glsl.js';
    mas um ShaderMaterial cru não recebe a conversão inversa na saída
    como os materiais nativos recebem. O resultado seria uma aura
    visivelmente mais escura e dessaturada que a paleta do CSS.
-   Trabalhando em sRGB dos dois lados, o shader casa com o catalogo.css. */
+   Trabalhando em sRGB dos dois lados, o shader casa com o index.css. */
 function paraVec3(valor, reserva) {
   const texto = (valor || '').trim() || reserva;
 
@@ -44,7 +44,7 @@ function paraVec3(valor, reserva) {
 }
 
 /* lê os tokens de cor direto do CSS — a paleta continua morando
-   no catalogo.css, sem duplicação */
+   no index.css, sem duplicação */
 function tokens() {
   const raiz = getComputedStyle(document.documentElement);
   const ler = (nome, reserva) => paraVec3(raiz.getPropertyValue(nome), reserva);
