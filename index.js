@@ -26,6 +26,12 @@
   var $ = function (sel, raiz) { return (raiz || document).querySelector(sel); };
   var reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Revelação no scroll. O bloco "revelar" lá embaixo troca esta função pela
+     versão com IntersectionObserver assim que roda; até lá — e quando o
+     usuário pede menos movimento — o elemento simplesmente aparece. */
+  var revelarDireto = function (el) { el.classList.add('on'); };
+  var observarRv = revelarDireto;
+
   var criar = function (tag, classe, texto) {
     var el = document.createElement(tag);
     if (classe) el.className = classe;
@@ -192,8 +198,11 @@
 
     /* ---- visão 1: grade de categorias ---- */
 
-    var montarCard = function (cat) {
-      var card = criar('article', 'card-cat');
+    var montarCard = function (cat, indice) {
+      var card = criar('article', 'card-cat rv rv--cascata');
+      /* o atraso vive no CSS; aqui só entra a posição na fila. Teto de 5 para
+         a última coluna não ficar esperando meio segundo para existir. */
+      card.style.setProperty('--fila', Math.min(indice, 5));
       card.appendChild(midia(cat, cat.tom, 'placeholder--capa'));
 
       var corpo = criar('div', 'card-cat__corpo');
@@ -227,8 +236,9 @@
 
     /* ---- visão 2: procedimentos da categoria ---- */
 
-    var montarItem = function (cat, item) {
-      var linha = criar('li');
+    var montarItem = function (cat, item, indice) {
+      var linha = criar('li', 'rv rv--cascata');
+      linha.style.setProperty('--fila', Math.min(indice, 5));
       var botao = criar('button', 'item-proc');
       botao.type = 'button';
       botao.setAttribute('aria-pressed', 'false');
@@ -281,7 +291,11 @@
       detalhe.appendChild(cabeca);
 
       var lista = criar('ul', 'itens-proc');
-      cat.itens.forEach(function (item) { lista.appendChild(montarItem(cat, item)); });
+      cat.itens.forEach(function (item, i) {
+        var linha = montarItem(cat, item, i);
+        lista.appendChild(linha);
+        observarRv(linha);
+      });
       detalhe.appendChild(lista);
 
       contagem.textContent = cat.itens.length + ' procedimentos em ' + cat.titulo;
@@ -290,7 +304,11 @@
     };
 
     ctaLink.href = dados.agendamento || AGENDA;
-    CATEGORIAS.forEach(function (cat) { grade.appendChild(montarCard(cat)); });
+    CATEGORIAS.forEach(function (cat, i) {
+      var card = montarCard(cat, i);
+      grade.appendChild(card);
+      observarRv(card);
+    });
     mostrarCategorias();
   }
 
@@ -378,12 +396,18 @@
 
     Array.prototype.forEach.call(alvos, function (el) { observador.observe(el); });
 
+    /* O catálogo chega por fetch, depois deste bloco rodar. Sem esta porta de
+       entrada, card criado mais tarde ficaria invisível para sempre — foi por
+       isso que ela existe, e não por elegância. */
+    observarRv = function (el) { observador.observe(el); };
+
     // rede de segurança: se o observador não entregar nada (aba em segundo plano,
     // renderização suspensa), o conteúdo aparece mesmo assim.
     setTimeout(function () {
       if (document.querySelector('.rv.on')) return;
       observador.disconnect();
-      Array.prototype.forEach.call(alvos, function (el) { el.classList.add('on'); });
+      observarRv = revelarDireto;
+      Array.prototype.forEach.call(document.querySelectorAll('.rv'), function (el) { el.classList.add('on'); });
     }, 2500);
   }());
 }());

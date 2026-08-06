@@ -142,6 +142,26 @@ h1, h2, p { margin: 0; }
 }
 .rv.on { opacity: 1; transform: none; }
 
+/* Cascata dos cards — versão curta e barata da revelação.
+   Blocos grandes de texto pedem os 30px e 1,1s do .rv; uma grade de cards
+   com esse mesmo tempo parece lenta, porque são vários elementos chegando
+   ao mesmo tempo no campo de visão. Aqui a distância é menor (14px), o
+   corpo encolhe de leve (.985) e o atraso entre irmãos é de 70ms.
+   Só transform e opacity: as duas propriedades que o navegador anima na
+   GPU, sem recalcular layout — é o que mantém o scroll liso no celular. */
+@keyframes cascataEntra {
+  from { opacity: 0; transform: translateY(14px) scale(.985) }
+  to   { opacity: 1; transform: none }
+}
+.rv--cascata { transform: none; }
+/* animation em vez de transition de propósito: o card já usa transition para
+   o hover, e as duas regras brigariam. Fill "backwards" segura o estado
+   inicial durante o atraso e devolve o controle ao CSS normal no fim — sem
+   isso, o preenchimento congelaria o transform e mataria o hover. */
+.rv--cascata.on {
+  animation: cascataEntra .55s var(--suave) calc(var(--fila, 0) * 70ms) backwards;
+}
+
 /* ====================== LOADER ====================== */
 
 .loader {
@@ -1084,6 +1104,7 @@ h1, h2, p { margin: 0; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
+    animation-delay: 0ms !important;   /* senão a cascata só atrasa a chegada */
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
