@@ -372,6 +372,7 @@ h1, h2, p { margin: 0; }
   display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
   animation: fadeUp 1.1s var(--suave) 1.62s both;
 }
+.hero__ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .hero__linha {
   position: relative; width: 100%; max-width: var(--max);
   height: 1px; margin: 44px auto 0;
@@ -471,6 +472,73 @@ h1, h2, p { margin: 0; }
   box-shadow: 0 12px 26px -18px rgba(0, 0, 0, .8);
 }
 .botao--fantasma:active { transform: scale(.95); box-shadow: none; }
+
+/* ====================== COMPONENTES DO REDESIGN (Hero + Procedimentos) ====================== */
+/* badge: eyebrow em pílula, usado acima de títulos (padrão Mobbin) */
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: var(--linha-marrom-fraca);
+  border: 1px solid var(--linha-marrom);
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--marrom);
+}
+/* variante para uso sobre fundo escuro */
+.badge--claro {
+  background: rgba(250, 240, 220, .08);
+  border-color: rgba(250, 240, 220, .22);
+  color: var(--lilas);
+}
+
+/* card: elevação sutil + hover com borda roxa (padrão 21st.dev) */
+.card {
+  border-radius: 20px;
+  border: 1px solid var(--linha-fraca);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(27, 23, 20, .04);
+  transition: transform .35s var(--suave), box-shadow .35s var(--suave), border-color .35s var(--suave);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(27, 23, 20, .2);
+  border-color: var(--roxo);
+}
+
+/* CTA primário: roxo sólido, para a ação principal de cada seção */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 16px 14px 28px;
+  border-radius: 999px;
+  background: var(--roxo); color: var(--papel);
+  font-size: 15px; font-weight: 500;
+  transition: background .25s var(--suave), transform .25s var(--suave), box-shadow .25s var(--suave);
+}
+.btn-primary .icone { width: 18px; height: 18px; }
+.btn-primary .botao__seta { background: var(--papel); color: var(--roxo); }
+.btn-primary:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -16px rgba(115, 76, 128, .55);
+}
+.btn-primary:active { transform: scale(.96); }
+
+/* CTA secundário: contorno fino, para uma ação de apoio ao lado do primário */
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: 1px solid var(--linha);
+  background: transparent; color: var(--tinta);
+  font-size: 15px; font-weight: 500;
+  transition: background .25s var(--suave), border-color .25s var(--suave), color .25s var(--suave), transform .25s var(--suave);
+}
+.btn-secondary:hover {
+  background: var(--tinta); color: var(--papel); border-color: var(--tinta);
+  transform: translateY(-2px);
+}
+.btn-secondary:active { transform: scale(.96); }
 
 /* ====================== MARQUEE ====================== */
 
@@ -720,14 +788,16 @@ h1, h2, p { margin: 0; }
 
 .card-cat {
   display: flex; flex-direction: column; overflow: hidden;
-  border-radius: 16px;
+  border-radius: 20px;
+  border: 1px solid var(--linha-fraca);
   background: #fff;
-  box-shadow: 0 1px 2px rgba(27, 23, 20, .04), 0 8px 24px -16px rgba(27, 23, 20, .18);
-  transition: box-shadow .35s var(--suave), transform .35s var(--suave);
+  box-shadow: 0 1px 2px rgba(27, 23, 20, .04);
+  transition: box-shadow .35s var(--suave), transform .35s var(--suave), border-color .35s var(--suave);
 }
 .card-cat:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 2px 4px rgba(27, 23, 20, .05), 0 18px 40px -22px rgba(27, 23, 20, .3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(27, 23, 20, .2);
+  border-color: var(--roxo);
 }
 .card-cat__corpo { display: flex; flex-direction: column; gap: 16px; flex: 1; padding: 24px; }
 .card-cat__titulo { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
@@ -1048,15 +1118,15 @@ h1, h2, p { margin: 0; }
 /* ====================== GARANTIA (tabela de valores) ====================== */
 
 .garantia {
-  display: flex; align-items: flex-start; gap: 14px;
-  margin-top: 28px; padding: 18px 22px;
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-top: 28px; padding: 22px 24px;
   background: rgba(115, 76, 128, .06);
-  border: 1px solid rgba(115, 76, 128, .18);
-  border-radius: 10px;
 }
+.garantia.card:hover { border-color: rgba(115, 76, 128, .3); }
+.garantia .badge { flex: none; margin-top: 1px; }
 .garantia__icone {
-  flex: none; width: 22px; height: 22px; margin-top: 1px;
-  color: var(--roxo);
+  flex: none; width: 14px; height: 14px;
+  color: var(--marrom);
 }
 .garantia p { font-size: 14.5px; line-height: 1.6; color: var(--texto-2); }
 .garantia strong { color: var(--tinta); }

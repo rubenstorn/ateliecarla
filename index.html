@@ -183,7 +183,7 @@
   <div class="hero__brilho hero__brilho--marrom" aria-hidden="true"></div>
 
   <div class="hero__interno">
-    <p class="rotulo hero__rotulo">Micropigmentação · Design de sobrancelhas</p>
+    <p class="badge hero__rotulo">Micropigmentação · Design de sobrancelhas</p>
     <!-- @gerado:hero-titulo — bloco reescrito por backend/publicar.js.
          Editar à mão aqui é permitido; o script sobrescreve na próxima vez. -->
     <h1 class="hero__titulo">
@@ -203,12 +203,17 @@
           <div class="assinatura__nome">Carla Denise</div>
           <div class="assinatura__papel">PMU Artist · +25 anos de experiência</div>
         </div>
-        <a class="botao botao--tinta" href="https://agendaagil.com/ateliecarla" target="_blank" rel="noopener">
-          Agendar meu horário
-          <span class="botao__seta" aria-hidden="true">
-            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-          </span>
-        </a>
+        <div class="hero__ctas">
+          <a class="btn-primary" href="https://agendaagil.com/ateliecarla" target="_blank" rel="noopener">
+            Agendar meu horário
+            <span class="botao__seta" aria-hidden="true">
+              <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </span>
+          </a>
+          <a class="btn-secondary" href="#procedimentos">
+            Ver procedimentos
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -320,7 +325,7 @@
   <div class="interno interno--medio">
     <div class="tabela__topo">
       <div>
-        <p class="rotulo rv">Tabela de valores</p>
+        <p class="badge rv">Tabela de valores</p>
         <h2 class="tabela__titulo rv">
           todos os<br><em class="italico">procedimentos</em>
         </h2>
@@ -328,8 +333,11 @@
       <p class="tabela__dica rv">Escolha uma categoria, depois o procedimento — o botão de agendamento aparece no rodapé.</p>
     </div>
 
-    <div class="garantia rv">
-      <svg class="garantia__icone" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+    <div class="garantia card rv">
+      <span class="badge">
+        <svg class="garantia__icone" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+        Garantia
+      </span>
       <p><strong>Retoque incluso em 30 dias.</strong> Se o resultado não ficar exatamente como combinamos, a sessão de ajuste está no valor do procedimento — sem custo extra.</p>
     </div>
 
@@ -349,7 +357,7 @@
         <p class="cta-agendar__nome" data-cta-nome></p>
         <p class="cta-agendar__meta" data-cta-meta></p>
       </div>
-      <a class="botao botao--creme" data-cta-link href="https://agendaagil.com/ateliecarla" target="_blank" rel="noopener">
+      <a class="btn-primary" data-cta-link href="https://agendaagil.com/ateliecarla" target="_blank" rel="noopener">
         Agende seu horário
         <span class="botao__seta" aria-hidden="true">
           <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
