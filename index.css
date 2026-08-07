@@ -1045,6 +1045,58 @@ h1, h2, p { margin: 0; }
 
 .contato__lgpd { margin: 0; font-size: 12px; line-height: 1.5; color: var(--texto-3); }
 
+/* ====================== GARANTIA (tabela de valores) ====================== */
+
+.garantia {
+  display: flex; align-items: flex-start; gap: 14px;
+  margin-top: 28px; padding: 18px 22px;
+  background: rgba(115, 76, 128, .06);
+  border: 1px solid rgba(115, 76, 128, .18);
+  border-radius: 10px;
+}
+.garantia__icone {
+  flex: none; width: 22px; height: 22px; margin-top: 1px;
+  color: var(--roxo);
+}
+.garantia p { font-size: 14.5px; line-height: 1.6; color: var(--texto-2); }
+.garantia strong { color: var(--tinta); }
+
+/* ====================== FAQ ====================== */
+
+.faq__titulo {
+  margin: 14px 0 0;
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(32px, 4.5vw, 52px);
+  line-height: 1.08; letter-spacing: -.02em;
+}
+
+.faq__lista { margin-top: 44px; border-top: 1px solid var(--linha-fraca); }
+
+.faq__item {
+  border-bottom: 1px solid var(--linha-fraca);
+}
+.faq__item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 22px 4px;
+  font-size: 17px; font-weight: 500;
+  cursor: pointer; list-style: none;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: '+';
+  flex: none;
+  font-family: var(--mono); font-size: 20px; font-weight: 400;
+  color: var(--roxo);
+  transition: transform .3s var(--suave);
+}
+.faq__item[open] summary::after { transform: rotate(45deg); }
+.faq__item p {
+  margin: 0 4px 24px;
+  max-width: 62em;
+  font-size: 15px; line-height: 1.7; color: var(--texto-2);
+}
+.faq__item p a { color: var(--roxo); border-bottom: 1px solid rgba(115, 76, 128, .3); }
+
 @media (max-width: 860px) {
   .secao-conteudo { padding: 76px var(--gutter); }
   .contato__interno { grid-template-columns: minmax(0, 1fr); }
@@ -1098,6 +1150,7 @@ h1, h2, p { margin: 0; }
   .cta-agendar .botao--creme { width: 100%; justify-content: space-between; }
   .recursos li { padding-right: 0; }
   .menu__interno { padding-top: 108px; gap: 44px; }
+  .faq__item summary { font-size: 15.5px; padding: 18px 2px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

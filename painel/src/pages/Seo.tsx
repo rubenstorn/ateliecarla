@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label'
 import { EstadoSalvo, useSalvamento } from '@/components/ui/estado-salvo'
 
 const VAZIO: SeoTipo = {
-  id: 1, meta_title: '', meta_description: '', og_image_url: '', canonical_url: '',
+  id: 1, meta_title: '', meta_description: '', og_title: '', og_description: '', og_image_url: '', canonical_url: '',
 }
 
 /* limites do Google: acima disso ele corta com reticências */
@@ -119,6 +119,26 @@ export function Seo() {
             </div>
 
             <div className="flex flex-col gap-1.5">
+              <Label htmlFor="ogt">Título no WhatsApp/Instagram <em className="font-normal text-muted-foreground">(opcional)</em></Label>
+              <Input id="ogt" maxLength={200} placeholder={seo.meta_title || 'usa o título de busca acima'} {...campo('og_title')} />
+              <span className="text-xs text-muted-foreground">
+                Deixe em branco para repetir o título de busca. Preencha só se quiser um texto diferente no card do link.
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="ogd">Descrição no WhatsApp/Instagram <em className="font-normal text-muted-foreground">(opcional)</em></Label>
+              <textarea
+                id="ogd"
+                rows={2}
+                maxLength={400}
+                placeholder={seo.meta_description || 'usa a descrição de busca acima'}
+                className="flex w-full rounded-md border border-input bg-card px-3 py-2 text-sm leading-relaxed focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background focus-visible:outline-none"
+                {...campo('og_description')}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
               <Label htmlFor="og">Imagem de compartilhamento — 1200×630</Label>
               <Input id="og" type="url" maxLength={500} {...campo('og_image_url')} />
               <span className="text-xs text-muted-foreground">
@@ -149,9 +169,9 @@ export function Seo() {
                   </div>
                 )}
                 <div className="p-3">
-                  <p className="truncate text-sm font-medium">{seo.meta_title || 'título…'}</p>
+                  <p className="truncate text-sm font-medium">{seo.og_title || seo.meta_title || 'título…'}</p>
                   <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">
-                    {seo.meta_description}
+                    {seo.og_description || seo.meta_description}
                   </p>
                 </div>
               </div>

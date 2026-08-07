@@ -126,6 +126,8 @@ function trocarBloco(html, nome, novoConteudo) {
 function blocoSeo(seo) {
   const titulo = esc(seo.meta_title);
   const descricao = esc(seo.meta_description);
+  const ogTitulo = esc(seo.og_title);
+  const ogDescricao = esc(seo.og_description);
   const imagem = esc(seo.og_image_url);
   const canonica = esc(seo.canonical_url);
 
@@ -137,16 +139,16 @@ function blocoSeo(seo) {
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Ateliê Carla Denise">
 <meta property="og:url" content="${canonica}">
-<meta property="og:title" content="${titulo}">
-<meta property="og:description" content="${descricao}">
+<meta property="og:title" content="${ogTitulo}">
+<meta property="og:description" content="${ogDescricao}">
 <meta property="og:image" content="${imagem}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Ateliê Carla Denise · micropigmentação e design de sobrancelhas em Goiânia">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${titulo}">
-<meta name="twitter:description" content="${descricao}">
+<meta name="twitter:title" content="${ogTitulo}">
+<meta name="twitter:description" content="${ogDescricao}">
 <meta name="twitter:image" content="${imagem}">`;
 }
 
@@ -180,9 +182,16 @@ async function principal() {
 
   console.log('· lendo o banco…');
   const [seo, hero] = await Promise.all([
-    buscar(cfg, 'seo', 'meta_title,meta_description,og_image_url,canonical_url'),
+    buscar(cfg, 'seo', 'meta_title,meta_description,og_title,og_description,og_image_url,canonical_url'),
     buscar(cfg, 'hero', 'titulo,titulo_destaque')
   ]);
+
+  /* og_title/og_description são opcionais: quando vazios, o card social
+     usa o mesmo texto do título/descrição de busca. Preenchê-los no
+     painel permite um texto mais forte para WhatsApp/Instagram sem
+     mexer no <title> que aparece no Google. */
+  seo.og_title = seo.og_title || seo.meta_title;
+  seo.og_description = seo.og_description || seo.meta_description;
 
   /* avisos de qualidade — o script não bloqueia, só alerta */
   if (!seo.meta_title) console.warn('⚠ meta_title está vazio no banco');
@@ -207,6 +216,8 @@ async function principal() {
     console.log('\n— modo conferência, nada foi gravado —');
     console.log(`  título:    ${seo.meta_title}`);
     console.log(`  descrição: ${seo.meta_description.slice(0, 80)}…`);
+    console.log(`  og:título: ${seo.og_title}`);
+    console.log(`  og:desc.:  ${seo.og_description.slice(0, 80)}…`);
     console.log(`  imagem:    ${seo.og_image_url}`);
     console.log(`  canônica:  ${seo.canonical_url}`);
     console.log(`  hero:      ${hero.titulo} / ${hero.titulo_destaque}`);
