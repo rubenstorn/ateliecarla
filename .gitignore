@@ -4,3 +4,4 @@ Thumbs.db
 _harness.html
 *.log
 .claude/settings.local.json
+.claude/settings.local.json.tmp.*

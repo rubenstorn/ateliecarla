@@ -1,0 +1,13 @@
+node_modules/
+dist/
+
+# chaves do Supabase — nunca no repositório
+.env
+.env.local
+.env.*.local
+
+*.log
+.DS_Store
+
+# artefatos de build do TypeScript
+*.tsbuildinfo

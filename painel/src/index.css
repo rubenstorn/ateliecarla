@@ -1,0 +1,189 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* =========================================================
+   Painel Ateliê Carla — tokens de tema
+
+   A paleta é a MESMA da landing page, convertida de hex para
+   oklch (o espaço de cor que o Tailwind 4 usa). A conversão foi
+   calculada, não estimada:
+
+     creme    #FAF0DC → oklch(0.9577 0.0285 84.59)
+     tinta    #1B1714 → oklch(0.2082 0.0087 59.15)
+     roxo     #734C80 → oklch(0.4805 0.0929 317.38)
+     lilás    #C9A6D6 → oklch(0.7720 0.0772 316.80)
+     marrom   #684322 → oklch(0.4181 0.0697 60.75)
+
+   A estrutura de layout segue o CoreUI (sidebar de 256px, cards
+   de raio 6px, faixa de widgets coloridos), mas nenhuma cor dele
+   foi usada — os azuis e roxos genéricos do template deram lugar
+   ao roxo e ao marrom da marca.
+   ========================================================= */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* WordPress usa cantos retos em tudo — é metade da assinatura
+     visual daquele painel. 2px só para não ficar agressivo. */
+  --radius: 0.125rem;
+
+  --background: oklch(0.9484 0.0021 80.00);        /* cinza de fundo, como o #f0f0f1 */
+  --foreground: oklch(0.2082 0.0087 59.15);        /* tinta    */
+
+  --card: oklch(1 0 0);                            /* branco puro, como as caixas do WP */
+  --card-foreground: oklch(0.2082 0.0087 59.15);
+
+  --popover: oklch(0.9942 0.0069 88.64);
+  --popover-foreground: oklch(0.2082 0.0087 59.15);
+
+  --primary: oklch(0.4805 0.0929 317.38);          /* roxo    */
+  --primary-foreground: oklch(0.9577 0.0285 84.59);/* creme   */
+
+  --secondary: oklch(0.9577 0.0285 84.59);         /* creme   */
+  --secondary-foreground: oklch(0.4181 0.0697 60.75);
+
+  --muted: oklch(0.9591 0.0074 80.72);
+  --muted-foreground: oklch(0.5400 0.0090 60.00);
+
+  --accent: oklch(0.9577 0.0285 84.59);
+  --accent-foreground: oklch(0.2082 0.0087 59.15);
+
+  --destructive: oklch(0.4843 0.1304 28.21);       /* vermelho */
+  --destructive-foreground: oklch(0.9942 0.0069 88.64);
+
+  --success: oklch(0.4790 0.0786 161.35);          /* verde    */
+  --warning: oklch(0.4181 0.0697 60.75);           /* marrom   */
+
+  /* bordas cinza e sólidas, como o #c3c4c7 do WordPress —
+     nada de borda quase invisível */
+  --border: oklch(0.8180 0.0030 80.00);
+  --input: oklch(0.7800 0.0040 80.00);
+  --ring: oklch(0.4805 0.0929 317.38);
+
+  /* barra lateral escura, na tinta da marca.
+     No WordPress o item ativo é um BLOCO SÓLIDO na cor de acento,
+     com texto branco — não um fundo sutil. */
+  --sidebar: oklch(0.2082 0.0087 59.15);
+  --sidebar-foreground: oklch(0.9577 0.0285 84.59);
+  --sidebar-muted: oklch(0.7400 0.0120 70.00);
+  --sidebar-accent: oklch(0.4805 0.0929 317.38);   /* roxo: item ativo */
+  --sidebar-border: oklch(0.2800 0.0090 55.00);
+  --sidebar-ring: oklch(0.7720 0.0772 316.80);     /* lilás    */
+
+  /* widgets de métrica — os quatro tons da marca no lugar dos
+     azul/laranja/vermelho genéricos do CoreUI */
+  --metrica-1: oklch(0.4805 0.0929 317.38);        /* roxo     */
+  --metrica-2: oklch(0.4181 0.0697 60.75);         /* marrom   */
+  --metrica-3: oklch(0.4128 0.0777 316.90);        /* roxo escuro */
+  --metrica-4: oklch(0.2303 0.0073 48.38);         /* tinta    */
+}
+
+.dark {
+  --background: oklch(0.1776 0 0);
+  --foreground: oklch(0.9577 0.0285 84.59);
+
+  --card: oklch(0.2303 0.0073 48.38);
+  --card-foreground: oklch(0.9577 0.0285 84.59);
+
+  --popover: oklch(0.2303 0.0073 48.38);
+  --popover-foreground: oklch(0.9577 0.0285 84.59);
+
+  --primary: oklch(0.7720 0.0772 316.80);          /* lilás no escuro */
+  --primary-foreground: oklch(0.2082 0.0087 59.15);
+
+  --secondary: oklch(0.2700 0.0090 55.00);
+  --secondary-foreground: oklch(0.9577 0.0285 84.59);
+
+  --muted: oklch(0.2500 0.0080 55.00);
+  --muted-foreground: oklch(0.7200 0.0100 70.00);
+
+  --accent: oklch(0.2800 0.0090 55.00);
+  --accent-foreground: oklch(0.9577 0.0285 84.59);
+
+  --destructive: oklch(0.5800 0.1400 28.21);
+  --destructive-foreground: oklch(0.9942 0.0069 88.64);
+
+  --success: oklch(0.5800 0.0900 161.35);
+  --warning: oklch(0.6200 0.0900 60.75);
+
+  --border: oklch(0.3000 0.0090 55.00);
+  --input: oklch(0.3200 0.0090 55.00);
+  --ring: oklch(0.7720 0.0772 316.80);
+
+  --sidebar: oklch(0.1500 0.0060 55.00);
+  --sidebar-foreground: oklch(0.9577 0.0285 84.59);
+  --sidebar-muted: oklch(0.6600 0.0150 70.00);
+  --sidebar-accent: oklch(0.2100 0.0080 50.00);
+  --sidebar-border: oklch(0.2800 0.0090 55.00);
+}
+
+/* ---------------------------------------------------------
+   Ponte para as utilidades do Tailwind 4
+
+   Sem este bloco, "bg-primary" e "text-muted-foreground" não
+   existem — é ele que transforma as variáveis acima em classes.
+   --------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-metrica-1: var(--metrica-1);
+  --color-metrica-2: var(--metrica-2);
+  --color-metrica-3: var(--metrica-3);
+  --color-metrica-4: var(--metrica-4);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  /* as mesmas fontes da landing page */
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /* 13px de base: a densidade do WordPress vem daqui, não do layout.
+     Um painel de trabalho cabe mais informação por tela que um site. */
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 13px;
+  }
+
+  /* números de métrica em tabular, para não dançar ao atualizar */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}

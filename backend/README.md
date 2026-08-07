@@ -83,32 +83,49 @@ Depois, em **Authentication** › **Providers** › **Email**, desligue
 **Enable sign ups**. Isso impede que qualquer pessoa crie conta no painel —
 só quem você cadastrar entra.
 
-### 5. Abrir o painel
+### 5. Colar as chaves em dois lugares
 
-Com o servidor do projeto rodando:
+Os mesmos dois valores vão em:
+
+| Arquivo | Serve para |
+|---|---|
+| `painel/.env` | o painel administrativo |
+| `api/config.js` | **a landing page**: formulário de contato, vídeos e galeria |
+
+No Windows, se o PowerShell reclamar de "execução de scripts desabilitada",
+use `npm.cmd` no lugar de `npm`.
+
+### 6. Abrir o painel
+
+São dois servidores em desenvolvimento:
 
 ```bash
-npx -y serve -l 4321 .
+npx.cmd -y serve -l 4321 .          # a landing page
+npm.cmd --prefix painel run dev     # o painel, em :4322
 ```
 
-Acesse `http://localhost:4321/admin/`. Entre com o e-mail e a senha do
-passo 4.
+Acesse `http://localhost:4322`. Entre com o e-mail e a senha do passo 4.
 
-### 6. Publicar
+⚠️ O Vite lê o `.env` **só ao iniciar**. Se você preencheu as chaves com o
+servidor já rodando, pare com `Ctrl + C` e suba de novo — senão o aviso de
+"não configurado" continua na tela.
 
-Ao subir o site para a hospedagem, o painel vai junto, em
-`seudominio.com.br/admin/`. Ele não aparece em busca (tem `noindex`) e não
-tem link a partir do site.
+### 7. Publicar
 
-## As cinco áreas do painel
+`npm --prefix painel run build` gera `painel/dist/`. Publique essa pasta como
+`/admin` do site. O painel não aparece em busca (tem `noindex`) e não tem link
+a partir da landing page.
+
+## As seis áreas do painel
 
 | Aba | O que faz | Efeito no site |
 |---|---|---|
-| **Contatos** | lista quem preencheu o formulário, muda status, anota, exporta CSV | — |
-| **Abertura** | título, subtítulo e botão do hero | imediato |
-| **Vídeos** | cadastra link do YouTube/Vimeo | imediato |
-| **Imagens** | envia fotos por arrastar | imediato |
-| **SEO** | título, descrição e imagem de compartilhamento | **exige rodar o publicar.js** |
+| **Visão geral** | métricas e últimos contatos | — |
+| **Contatos** | status, anotações, filtro, busca, WhatsApp, CSV | — |
+| **Abertura** | título, subtítulo e botão do topo | imediato |
+| **Vídeos** | link do YouTube/Vimeo | imediato |
+| **Imagens** | envio por arrastar, com grade e texto alternativo | imediato |
+| **Busca e SEO** | meta tags, com prévia do Google e do WhatsApp | **exige rodar o publicar.js** |
 
 Vídeos e imagens entram como **rascunho**. Só aparecem no site depois de
 marcar "no site" — assim nada meio-pronto vaza para a cliente.
@@ -176,13 +193,31 @@ Fotos de rosto de cliente são dado pessoal também, e precisam de autorização
 de uso de imagem por escrito. O caminho mais simples é uma cláusula na ficha
 de anamnese.
 
-## O que eu não pude testar
+## Estado da instalação
 
-Escrevi e validei a sintaxe de todos os arquivos, mas **não existe projeto
-Supabase criado**, então nada aqui foi executado contra um banco real. Não
-verifiquei: se o `schema.sql` roda sem erro, se as políticas de RLS se
-comportam como descrito, se o login funciona, nem se o upload de imagem
-grava no bucket.
+O projeto Supabase existe e responde. Verificado pela API:
 
-Quando você criar o projeto e rodar os dois arquivos SQL, me diga — eu testo
-o fluxo inteiro no navegador e corrijo o que aparecer.
+| Tabela | Estado |
+|---|---|
+| `seo` | 1 linha, com o texto do seed ✓ |
+| `videos`, `midias`, `leads` | vazias — esperado, nada cadastrado |
+| **`hero`** | **0 linhas** — o seed deveria ter criado 1 |
+
+O `hero` vazio faz a aba Abertura abrir com os campos em branco. Como `seo`
+funcionou e `hero` não, e ambos têm a mesma política de leitura, o mais
+provável é que o `seed.sql` tenha rodado pela metade. Rodar de novo resolve —
+ele é seguro de repetir.
+
+Para diagnosticar, no SQL Editor:
+
+```sql
+select 'hero' as tabela, count(*) from public.hero
+union all select 'seo', count(*) from public.seo;
+
+select tablename, policyname, roles, cmd
+from pg_policies where schemaname = 'public' order by tablename;
+```
+
+**Ainda não testado contra o banco real:** login com senha, gravação pelo
+painel, upload para o bucket e o comportamento das políticas de RLS na
+prática. Isso depende do usuário administrador estar criado (passo 4).

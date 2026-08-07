@@ -22,8 +22,8 @@
    a RLS. Ela só é usada em servidor, nunca no navegador.
    ========================================================= */
 
-export const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-export const SUPABASE_ANON_KEY = 'COLE_AQUI_A_CHAVE_ANON';
+export const SUPABASE_URL = 'https://bnnhwefceiegsaklvtec.supabase.co';
+export const SUPABASE_ANON_KEY = 'sb_publishable_FEnyiE6NCo0dR9ELbBrmBA_bhId0NCo';
 
 /* versão do supabase-js, via CDN — sem npm, sem build */
 export const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
