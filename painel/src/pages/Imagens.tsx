@@ -11,13 +11,64 @@ import { Label } from '@/components/ui/label'
 const BUCKET = 'midias'
 const LIMITE_BYTES = 5 * 1024 * 1024
 
-const GRUPOS = [
-  { valor: 'galeria', rotulo: 'galeria do site' },
-  { valor: 'antes-depois', rotulo: 'antes e depois' },
-  { valor: 'atelie', rotulo: 'o ateliê' },
-  { valor: 'capa-categoria', rotulo: 'capa de categoria' },
-  { valor: 'compartilhamento', rotulo: 'imagem de compartilhamento' },
+/* =========================================================
+   Grupos de imagem
+
+   A distinção que importa é "automatico":
+
+   · automatico = true  → a imagem aparece no site sozinha assim
+     que você marca "no site". Hoje só a galeria funciona assim.
+
+   · automatico = false → o site NÃO lê este grupo. A imagem fica
+     guardada aqui e você copia a URL para colar onde ela é usada.
+     O botão de copiar (ícone ao lado da lixeira) serve para isso.
+
+   Isto existe porque antes a tela oferecia cinco grupos com o
+   mesmo botão "no site", e quatro deles não faziam nada — dava a
+   entender que a foto tinha sido publicada quando não tinha.
+   ========================================================= */
+
+interface Grupo {
+  valor: string
+  rotulo: string
+  automatico: boolean
+  onde: string
+}
+
+const GRUPOS: Grupo[] = [
+  {
+    valor: 'galeria',
+    rotulo: 'Galeria do site',
+    automatico: true,
+    onde: 'aparece na seção "antes e depois" da página',
+  },
+  {
+    valor: 'compartilhamento',
+    rotulo: 'Imagem de compartilhamento',
+    automatico: false,
+    onde: 'copie a URL e cole na aba Busca e SEO',
+  },
+  {
+    valor: 'capa-categoria',
+    rotulo: 'Capa de categoria',
+    automatico: false,
+    onde: 'copie a URL e cole no campo "foto" em dados/catalogo.json',
+  },
+  {
+    valor: 'atelie',
+    rotulo: 'Fotos do ateliê',
+    automatico: false,
+    onde: 'guardadas aqui; ainda não há seção no site que as use',
+  },
 ]
+
+const grupoDe = (valor: string): Grupo =>
+  GRUPOS.find((g) => g.valor === valor) ?? {
+    valor,
+    rotulo: valor,
+    automatico: false,
+    onde: 'grupo antigo — o site não lê',
+  }
 
 /** tira acento e caractere estranho do nome do arquivo */
 function nomeSeguro(nome: string) {
@@ -158,8 +209,8 @@ export function Imagens() {
         </CardHeader>
 
         <CardContent className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1.5 sm:max-w-xs">
-            <Label htmlFor="grupo">Grupo das próximas imagens</Label>
+          <div className="flex flex-col gap-1.5 sm:max-w-md">
+            <Label htmlFor="grupo">Onde estas imagens vão ser usadas</Label>
             <select
               id="grupo"
               value={grupo}
@@ -170,6 +221,18 @@ export function Imagens() {
                 <option key={g.valor} value={g.valor}>{g.rotulo}</option>
               ))}
             </select>
+
+            {/* diz na hora se este grupo publica sozinho ou não */}
+            <p
+              className={cn(
+                'text-xs leading-relaxed',
+                grupoDe(grupo).automatico ? 'text-success' : 'text-warning',
+              )}
+            >
+              {grupoDe(grupo).automatico
+                ? `Publica sozinho: ${grupoDe(grupo).onde}.`
+                : `Não publica sozinho — ${grupoDe(grupo).onde}.`}
+            </p>
           </div>
 
           <div
@@ -219,7 +282,11 @@ export function Imagens() {
                   key={m.id}
                   className={cn(
                     'flex flex-col overflow-hidden rounded-md border',
-                    !m.publicado && 'border-dashed bg-muted/30',
+                    /* tracejado = rascunho. Só faz sentido onde existe
+                       publicação; nos outros grupos a imagem nunca deixaria
+                       de ser "rascunho" e a borda ficaria tracejada para
+                       sempre, sem querer dizer nada. */
+                    grupoDe(m.grupo).automatico && !m.publicado && 'border-dashed bg-muted/30',
                   )}
                 >
                   <img
@@ -234,6 +301,20 @@ export function Imagens() {
                       <p className="truncate text-sm font-medium">{m.titulo}</p>
                       <p className="font-mono text-[10px] text-muted-foreground">
                         {m.grupo}{m.largura ? ` · ${m.largura}×${m.altura}` : ''}
+                      </p>
+                      <p
+                        className={cn(
+                          'mt-1.5 text-[11px] leading-snug',
+                          grupoDe(m.grupo).automatico
+                            ? m.publicado ? 'text-success' : 'text-muted-foreground'
+                            : 'text-warning',
+                        )}
+                      >
+                        {grupoDe(m.grupo).automatico
+                          ? m.publicado
+                            ? 'No ar na galeria'
+                            : 'Rascunho — marque "no site" para publicar'
+                          : grupoDe(m.grupo).onde}
                       </p>
                     </div>
 
@@ -254,14 +335,19 @@ export function Imagens() {
                     </div>
 
                     <div className="mt-auto flex flex-wrap items-center gap-2">
-                      <label className="flex cursor-pointer items-center gap-1.5 text-xs">
-                        <input
-                          type="checkbox"
-                          checked={m.publicado}
-                          onChange={(e) => alterar(m.id, { publicado: e.target.checked })}
-                        />
-                        no site
-                      </label>
+                      {/* o "no site" só aparece em grupo que o site lê.
+                          Nos outros ele não teria efeito nenhum, e um
+                          controle que não faz nada engana quem usa. */}
+                      {grupoDe(m.grupo).automatico && (
+                        <label className="flex cursor-pointer items-center gap-1.5 text-xs">
+                          <input
+                            type="checkbox"
+                            checked={m.publicado}
+                            onChange={(e) => alterar(m.id, { publicado: e.target.checked })}
+                          />
+                          no site
+                        </label>
+                      )}
 
                       <Button variant="ghost" size="sm" className="ml-auto size-8 p-0"
                         onClick={() => copiarUrl(m)} title="Copiar endereço da imagem">

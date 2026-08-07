@@ -22,7 +22,20 @@ export function desdeQuando(iso: string): string {
   return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })
 }
 
-/** telefone só com dígitos, no formato que o wa.me espera */
-export function paraWhatsApp(telefone: string): string {
-  return '55' + telefone.replace(/\D/g, '')
+/**
+ * Link de conversa no WhatsApp.
+ *
+ * Usa a forma api.whatsapp.com/send/ — a mesma que o WhatsApp
+ * Business gera. O wa.me é um encurtador que redireciona para cá;
+ * os dois funcionam, mas manter uma forma só evita divergência
+ * entre o site e o painel.
+ *
+ * @param telefone  como estiver: "(62) 3558-2655" ou "62912345678"
+ * @param mensagem  texto já preenchido na conversa (opcional)
+ */
+export function linkWhatsApp(telefone: string, mensagem?: string): string {
+  const numero = '55' + telefone.replace(/\D/g, '')
+  const texto = mensagem ? encodeURIComponent(mensagem) : ''
+
+  return `https://api.whatsapp.com/send/?phone=${numero}&text=${texto}&type=phone_number&app_absent=0`
 }

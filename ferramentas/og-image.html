@@ -52,13 +52,13 @@
   <h1>Imagem de compartilhamento</h1>
   <p class="sub">
     É o que aparece quando o link do site é colado no WhatsApp, no Instagram ou no Facebook.
-    Formato exigido: 1200×630. Gere uma vez e salve em <code>assets/og-atelie-carla.png</code>.
+    Formato exigido: 1200×630. Gere uma vez e salve em <code>assets/og-atelie-carla.jpg</code>.
   </p>
 
   <canvas id="tela" width="1200" height="630"></canvas>
 
   <div class="acoes">
-    <button id="baixar" type="button">Baixar PNG</button>
+    <button id="baixar" type="button">Baixar JPG</button>
     <label class="botao secundario" for="foto">Usar uma foto de fundo</label>
     <input id="foto" type="file" accept="image/*">
     <button id="limpar" type="button" class="secundario" style="background:transparent;color:var(--tinta);border:1px solid rgba(27,23,20,.2)">Sem foto</button>
@@ -67,9 +67,9 @@
 
   <div class="nota">
     <strong>Depois de baixar:</strong><br>
-    1. Salve o arquivo como <code>assets/og-atelie-carla.png</code><br>
-    2. No <code>index.html</code>, troque <code>SEU-DOMINIO.com.br</code> pelo domínio real
-       (7 ocorrências: canonical, og:url, og:image, twitter:image + url, image e logo no JSON-LD)<br>
+    1. Salve o arquivo como <code>assets/og-atelie-carla.jpg</code><br>
+    2. O <code>index.html</code> já aponta para <code>carladenisebeauty.com.br</code> —
+       nada a trocar, a não ser que o domínio mude<br>
     3. Teste em <code>developers.facebook.com/tools/debug</code> — o WhatsApp usa o mesmo cache<br><br>
     <strong>Com foto:</strong> escolha uma foto na horizontal, de preferência um trabalho
     finalizado em close. A foto entra escurecida à direita para o texto continuar legível.
@@ -166,15 +166,22 @@ async function desenhar() {
 }
 
 document.getElementById('baixar').addEventListener('click', () => {
+  /* JPEG a 92%, não PNG.
+
+     O mesmo desenho sai com 646 KB em PNG e 72 KB em JPEG — nove
+     vezes menor, sem diferença visível neste conteúdo. Importa
+     porque há relato de o WhatsApp não gerar a prévia quando a
+     imagem passa de ~600 KB, e o PNG ficava exatamente nesse
+     limite. */
   tela.toBlob((blob) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'og-atelie-carla.png';
+    a.download = 'og-atelie-carla.jpg';
     a.click();
     URL.revokeObjectURL(url);
     status.textContent = Math.round(blob.size / 1024) + ' KB — salve em assets/';
-  }, 'image/png');
+  }, 'image/jpeg', 0.92);
 });
 
 document.getElementById('foto').addEventListener('change', (ev) => {

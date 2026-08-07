@@ -33,7 +33,7 @@ on conflict (id) do update set
 -- -------------------------------------------------------------
 -- SEO — as meta tags que estão no index.html hoje
 --
--- Troque SEU-DOMINIO.com.br pelo domínio real quando existir.
+-- Troque carladenisebeauty.com.br pelo domínio real quando existir.
 -- -------------------------------------------------------------
 
 insert into public.seo (id, meta_title, meta_description, og_image_url, canonical_url)
@@ -41,8 +41,8 @@ values (
   1,
   'Ateliê Carla · sobrancelhas que combinam com o seu rosto',
   'Micropigmentação e design de sobrancelhas no Setor Bueno, Goiânia. Microblading, nanoblading, shadow, lábios, delineado e o método Repigment de correção — com tabela de valores completa e agenda online.',
-  'https://SEU-DOMINIO.com.br/assets/og-atelie-carla.png',
-  'https://SEU-DOMINIO.com.br/'
+  'https://carladenisebeauty.com.br/assets/og-atelie-carla.jpg',
+  'https://carladenisebeauty.com.br/'
 )
 on conflict (id) do update set
   meta_title       = excluded.meta_title,

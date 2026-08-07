@@ -22,6 +22,12 @@ import { Previa } from '@/pages/Previa'
    esta tela, o banco recusaria ler os contatos sem sessão válida.
    ========================================================= */
 
+/* Publicado, o painel fica em /admin/ — sem o basename o
+   react-router montaria as rotas na raiz do domínio e "/contatos"
+   apontaria para uma página que não existe no site.
+   Em desenvolvimento ele roda na raiz de localhost:4322. */
+const BASE_ROTAS = import.meta.env.DEV ? undefined : '/admin'
+
 export default function App() {
   const [sessao, setSessao] = React.useState<Session | null>(null)
   const [verificando, setVerificando] = React.useState(true)
@@ -86,13 +92,31 @@ export default function App() {
     )
   }
 
-  /* rota de revisão visual, só em desenvolvimento — permite ver o
-     painel montado sem banco nem login. Sai do pacote publicado. */
+  /* Rota de revisão visual, só em desenvolvimento — permite ver o
+     painel montado sem banco nem login. Sai do pacote publicado.
+
+     Aceita ?p= para escolher a página:
+       /__previa                → dados fictícios
+       /__previa?p=imagens      → a página real de Imagens
+       /__previa?p=abertura|videos|seo|contatos
+
+     As páginas reais consultam o Supabase; sem sessão elas voltam
+     vazias, o que basta para conferir layout e textos. */
   if (import.meta.env.DEV && window.location.pathname === '/__previa') {
+    const qual = new URLSearchParams(window.location.search).get('p')
+
+    const paginas: Record<string, React.ReactNode> = {
+      abertura: <Abertura />,
+      videos: <Videos />,
+      imagens: <Imagens />,
+      seo: <Seo />,
+      contatos: <Contatos />,
+    }
+
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={BASE_ROTAS}>
         <Shell email="previa@ateliecarla" novosLeads={2} onSair={() => {}}>
-          <Previa />
+          {(qual && paginas[qual]) || <Previa />}
         </Shell>
       </BrowserRouter>
     )
@@ -118,7 +142,7 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={BASE_ROTAS}>
       <Shell email={sessao.user.email ?? ''} novosLeads={novosLeads} onSair={sair}>
         <Routes>
           <Route path="/" element={<Dashboard />} />

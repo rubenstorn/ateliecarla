@@ -3,7 +3,15 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  /* Publicado, o painel mora em carladenisebeauty.com.br/admin/ —
+     sem este "base" o HTML gerado pediria /assets/index-xxx.js na
+     raiz do domínio e daria 404 em tudo.
+
+     Em desenvolvimento fica "/" para o servidor continuar
+     respondendo em localhost:4322 direto, sem /admin no caminho. */
+  base: command === 'build' ? '/admin/' : '/',
+
   plugins: [react(), tailwindcss()],
 
   resolve: {
@@ -23,4 +31,4 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
   },
-})
+}))

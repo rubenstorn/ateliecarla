@@ -4,7 +4,7 @@ import { Download, MessageCircle, AlertCircle } from 'lucide-react'
 import {
   supabase, configurado, STATUS_LEAD, type Lead, type StatusLead,
 } from '@/lib/supabase'
-import { desdeQuando, paraWhatsApp } from '@/lib/utils'
+import { desdeQuando, linkWhatsApp } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -209,9 +209,10 @@ export function Contatos() {
                       <td className="px-3 py-3">
                         <Button variant="outline" size="sm" asChild>
                           <a
-                            href={`https://wa.me/${paraWhatsApp(lead.telefone)}?text=${encodeURIComponent(
+                            href={linkWhatsApp(
+                              lead.telefone,
                               `Olá, ${lead.nome.split(' ')[0]}! Aqui é do Ateliê Carla Denise.`,
-                            )}`}
+                            )}
                             target="_blank"
                             rel="noopener"
                           >
