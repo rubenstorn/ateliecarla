@@ -140,6 +140,8 @@ create table if not exists public.seo (
 
   meta_title       text not null default '' check (char_length(meta_title) <= 70),
   meta_description text not null default '' check (char_length(meta_description) <= 200),
+  og_title         text check (char_length(og_title) <= 200),
+  og_description   text check (char_length(og_description) <= 400),
   og_image_url     text not null default '' check (char_length(og_image_url) <= 500),
   canonical_url    text not null default '' check (char_length(canonical_url) <= 500),
 
@@ -150,6 +152,10 @@ comment on column public.seo.meta_title is
   'Limite de 70 caracteres: o Google corta o título acima disso.';
 comment on column public.seo.meta_description is
   'Limite de 200: o Google exibe ~155-160, o resto é cortado.';
+comment on column public.seo.og_title is
+  'Título do card do WhatsApp/Instagram/Facebook. Se vazio, publicar.js usa meta_title.';
+comment on column public.seo.og_description is
+  'Descrição do card do WhatsApp/Instagram/Facebook. Se vazia, publicar.js usa meta_description.';
 
 drop trigger if exists seo_atualizado_em on public.seo;
 create trigger seo_atualizado_em

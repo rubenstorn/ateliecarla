@@ -44,12 +44,12 @@
 <link rel="stylesheet" href="index.css">
 
 <!-- camada WebGL: import map resolve o especificador "three".
-     Para tirar a dependência de CDN, baixe three.module.js para
-     assets/ e troque a URL abaixo por "assets/three.module.js". -->
+     three.module.js está vendorizado em assets/ (r169) — sem
+     dependência de CDN externo em produção. -->
 <script type="importmap">
 {
   "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"
+    "three": "assets/three.module.js"
   }
 }
 </script>
@@ -144,6 +144,7 @@
       <a href="#atelie">O ateliê</a>
       <a href="#repigment">Método Repigment</a>
       <a href="#procedimentos">Procedimentos</a>
+      <a href="#faq">Perguntas frequentes</a>
       <a href="#agendar">Agendar</a>
     </nav>
     <dl class="menu__meta">
@@ -327,6 +328,11 @@
       <p class="tabela__dica rv">Escolha uma categoria, depois o procedimento — o botão de agendamento aparece no rodapé.</p>
     </div>
 
+    <div class="garantia rv">
+      <svg class="garantia__icone" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <p><strong>Retoque incluso em 30 dias.</strong> Se o resultado não ficar exatamente como combinamos, a sessão de ajuste está no valor do procedimento — sem custo extra.</p>
+    </div>
+
     <div class="catalogo" data-catalogo aria-live="polite">
       <div class="categorias" data-categorias></div>
       <div class="detalhe" data-detalhe hidden></div>
@@ -468,6 +474,41 @@
   </div>
 </section>
 
+<!-- ====================== PERGUNTAS FREQUENTES ====================== -->
+<section class="secao secao--papel-2 faq" id="faq">
+  <div class="interno interno--estreito">
+    <p class="rotulo rv">Antes de agendar</p>
+    <h2 class="faq__titulo rv">perguntas <em class="italico">frequentes</em></h2>
+
+    <div class="faq__lista">
+      <details class="faq__item rv">
+        <summary>Dói fazer a micropigmentação?</summary>
+        <p>Aplicamos anestésico tópico antes de começar e reforçamos durante a sessão, se precisar. A maioria das clientes descreve como um desconforto leve, parecido com uma linha, não como dor.</p>
+      </details>
+
+      <details class="faq__item rv">
+        <summary>Quanto tempo dura o resultado?</summary>
+        <p>Depende da técnica: microblading e nanoblading costumam durar de 12 a 18 meses, shadow e labial um pouco mais. Tipo de pele, exposição ao sol e cuidado no pós também influenciam — a gente te orienta na sessão.</p>
+      </details>
+
+      <details class="faq__item rv">
+        <summary>O retoque está incluso no valor?</summary>
+        <p>Sim. Toda micropigmentação inclui uma sessão de retoque em até 30 dias, para ajustar cor e desenho depois que a pele cicatrizar — sem custo adicional.</p>
+      </details>
+
+      <details class="faq__item rv">
+        <summary>Já fiz micropigmentação em outro lugar e não gostei. Dá pra corrigir?</summary>
+        <p>Na maioria dos casos, sim — é para isso que existe o método Repigment: ele clareia o pigmento residual e reconstrói o desenho em etapas seguras, sem laser agressivo. <a class="hoverline" href="#repigment">Veja como funciona</a>.</p>
+      </details>
+
+      <details class="faq__item rv">
+        <summary>Quanto tempo dura a sessão e o que eu não posso fazer depois?</summary>
+        <p>A maioria dos procedimentos leva entre 1h30 e 2h30, incluindo o desenho aprovado por você antes de começar. No pós-cicatrização, evite sol direto, piscina, sauna e cremes não indicados por cerca de 7 a 10 dias — passamos tudo por escrito ao final da sessão.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- ====================== FORMULÁRIO DE CONTATO ====================== -->
 <section class="secao-conteudo contato" id="contato">
   <div class="contato__interno">
@@ -553,6 +594,7 @@
     <a href="#procedimentos">Procedimentos</a>
     <a href="#atelie">O ateliê</a>
     <a href="#repigment">Método Repigment</a>
+    <a href="#faq">Perguntas frequentes</a>
     <a href="https://api.whatsapp.com/send/?phone=556235582655&amp;text&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://instagram.com/ateliecarla" target="_blank" rel="noopener">@ateliecarla</a>
     <a href="https://maps.app.goo.gl/LRpb6FpQLk19ujkW7" target="_blank" rel="noopener">Localização</a>
