@@ -108,9 +108,9 @@ export interface Seo {
   canonical_url: string
 }
 
-export type TomCategoria = 'rosa' | 'lilas' | 'azul' | 'verde' | 'dourado'
+export type TomCategoria = 'rosa' | 'lilas' | 'azul' | 'pink' | 'ambar'
 
-export const TONS_CATEGORIA: TomCategoria[] = ['rosa', 'lilas', 'azul', 'verde', 'dourado']
+export const TONS_CATEGORIA: TomCategoria[] = ['rosa', 'lilas', 'azul', 'pink', 'ambar']
 
 export interface CatalogoConfig {
   id: number

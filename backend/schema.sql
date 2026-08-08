@@ -195,7 +195,7 @@ create table if not exists public.catalogo_categorias (
   id            uuid primary key default gen_random_uuid(),
 
   titulo        text not null check (char_length(titulo) between 1 and 120),
-  tom           text not null default 'rosa' check (tom in ('rosa', 'lilas', 'azul', 'verde', 'dourado')),
+  tom           text not null default 'rosa' check (tom in ('rosa', 'lilas', 'azul', 'pink', 'ambar')),
   preco_partir  text not null default '' check (char_length(preco_partir) <= 40),
   tempo         text not null default '' check (char_length(tempo) <= 60),
   foto_url      text check (char_length(foto_url) <= 500),
