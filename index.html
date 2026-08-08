@@ -609,6 +609,18 @@
   </nav>
 </footer>
 
+<script>
+  /* Config do Supabase para o site público ler o catálogo direto do
+     banco (fallback: dados/catalogo.json). Mesmos valores que estão
+     em painel/.env (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY) —
+     a chave anon é pública por desenho, protegida pelas políticas
+     de RLS em backend/schema.sql, não pelo segredo da chave. Ver
+     dados/README.md. */
+  window.__SUPABASE__ = {
+    url: 'https://SEU-PROJETO.supabase.co',
+    anonKey: 'COLE_AQUI_A_CHAVE_ANON'
+  };
+</script>
 <script src="index.js"></script>
 <script type="module" src="webgl/index.js"></script>
 <!-- ligação com o backend: melhoria progressiva, a página funciona sem -->
