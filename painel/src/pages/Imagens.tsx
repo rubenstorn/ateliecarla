@@ -60,9 +60,17 @@ const GRUPOS: Grupo[] = [
     valor: 'capa-categoria',
     rotulo: 'Capa de categoria',
     automatico: false,
-    onde: 'copie a URL e cole no campo "foto" em dados/catalogo.json',
+    onde: 'copie a URL e cole no campo "foto" da categoria (não do item) em dados/catalogo.json',
     proporcao: 'faixa larga (~2:1)',
     tamanho: '900×450px',
+  },
+  {
+    valor: 'foto-procedimento',
+    rotulo: 'Foto de procedimento',
+    automatico: false,
+    onde: 'copie a URL e cole no campo "foto" do item dentro de "itens" em dados/catalogo.json',
+    proporcao: 'quadrada (1:1)',
+    tamanho: '300×300px',
   },
   {
     valor: 'atelie',
