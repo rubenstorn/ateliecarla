@@ -8,6 +8,17 @@ Depois de editar lá, rode `node ferramentas/exportar-catalogo.mjs` para
 regravar este arquivo a partir do banco — `montar-deploy.mjs` lembra disso
 antes de publicar.
 
+**Primeira vez configurando o banco?** Depois de rodar `backend/schema.sql`
+no SQL Editor do Supabase, as tabelas do catálogo nascem vazias. Para
+popular com o que já está neste arquivo, rode uma única vez:
+
+```bash
+SUPABASE_SERVICE_ROLE_KEY=xxxxx node ferramentas/importar-catalogo.mjs
+```
+
+A chave `service_role` fica em Supabase › Project Settings › API — cole só
+no comando, nunca em arquivo. Depois disso, edite pelo painel.
+
 Editar este JSON à mão ainda funciona (o site não distingue a origem), mas
 some na próxima exportação. Para uma mudança pontual e definitiva sem abrir
 o painel, edite aqui — só não rode o script de exportação depois, ou ele
