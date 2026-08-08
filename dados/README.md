@@ -1,8 +1,38 @@
 # dados/catalogo.json — como mexer
 
-Este arquivo é a **fonte única** do catálogo. Preço, duração, nome de
-procedimento e foto: tudo se muda aqui, e o site se atualiza sozinho. Não
-existe mais lista de procedimentos dentro do `index.js`.
+O site lê o catálogo **direto do Supabase** (mesmo banco que o painel
+edita) — a foto ou preço salvos no painel aparecem no site na próxima
+visita, sem passo manual. Este arquivo continua existindo como **reserva**:
+se a config do Supabase não estiver preenchida em `index.html`
+(`window.__SUPABASE__`) ou a chamada falhar (banco fora do ar, chave
+errada), o site cai automaticamente para este JSON.
+
+**A fonte de verdade é o painel** (aba Catálogo, editando o banco). Rode
+`node ferramentas/exportar-catalogo.mjs` de vez em quando para manter este
+arquivo de reserva atualizado — `montar-deploy.mjs` lembra disso antes de
+publicar.
+
+**Configurar o site para ler do Supabase:** edite `window.__SUPABASE__` no
+`index.html` (perto do `<script src="index.js">`) com a mesma
+`VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` que estão em `painel/.env`.
+É a chave `anon` — pública por desenho, protegida pelas políticas de RLS
+do `backend/schema.sql`, não pelo segredo da chave.
+
+**Primeira vez configurando o banco?** Depois de rodar `backend/schema.sql`
+no SQL Editor do Supabase, as tabelas do catálogo nascem vazias. Para
+popular com o que já está neste arquivo, rode uma única vez:
+
+```bash
+SUPABASE_SERVICE_ROLE_KEY=xxxxx node ferramentas/importar-catalogo.mjs
+```
+
+A chave `service_role` fica em Supabase › Project Settings › API — cole só
+no comando, nunca em arquivo. Depois disso, edite pelo painel.
+
+Editar este JSON à mão ainda funciona (o site não distingue a origem), mas
+some na próxima exportação. Para uma mudança pontual e definitiva sem abrir
+o painel, edite aqui — só não rode o script de exportação depois, ou ele
+sobrescreve com o que estiver no banco.
 
 ## Trocar um preço
 

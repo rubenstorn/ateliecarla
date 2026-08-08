@@ -9,18 +9,23 @@
   /* ---------------------------------------------------------
      Dados
 
-     Preços, durações e fotos moram em dados/catalogo.json —
-     esta é a única fonte. Não edite listas aqui dentro.
-     Ver dados/README.md.
+     Fonte principal: Supabase, direto do banco que o painel edita
+     (tabelas catalogo_config/catalogo_categorias/catalogo_itens) —
+     assim a foto/preço aparece no site assim que é salvo no painel,
+     sem passo manual. Se a config do Supabase não estiver preenchida
+     em index.html (window.__SUPABASE__) ou a chamada falhar, cai para
+     dados/catalogo.json, que continua existindo como cópia de reserva
+     (gerada por ferramentas/exportar-catalogo.mjs). Ver dados/README.md.
 
      IMPORTANTE: o fetch exige que a página seja servida por
      http:// (o launch.json do projeto já faz isso). Abrir o
      index.html com duplo clique (file://) faz o navegador
-     bloquear a leitura do JSON por CORS — nesse caso a tabela
-     mostra um aviso com o link do agendamento.
+     bloquear a leitura por CORS — nesse caso a tabela mostra um
+     aviso com o link do agendamento.
      --------------------------------------------------------- */
 
   var FONTE = 'dados/catalogo.json';
+  var SUPABASE = window.__SUPABASE__ || {};
   var AGENDA = 'https://agendaagil.com/ateliecarla';   /* reserva; o JSON manda */
 
   var $ = function (sel, raiz) { return (raiz || document).querySelector(sel); };
@@ -343,14 +348,71 @@
      agendamento em vez de ficar vazia sem explicação.
      --------------------------------------------------------- */
 
+  /* Busca as três tabelas do catálogo na API REST do Supabase
+     (PostgREST) e monta o mesmo formato de objeto que o JSON usa,
+     para o resto do código (catalogo(), capaDoVideo()) não precisar
+     saber de onde os dados vieram. midia/_leiaMe não moram no banco
+     ainda, então preserva o que tiver no JSON estático por baixo. */
+  var carregarDoSupabase = function () {
+    if (!SUPABASE.url || !SUPABASE.anonKey || SUPABASE.url.indexOf('SEU-PROJETO') !== -1) {
+      return Promise.reject(new Error('Supabase não configurado'));
+    }
+
+    var cabecalhos = { apikey: SUPABASE.anonKey, Authorization: 'Bearer ' + SUPABASE.anonKey };
+    var buscar = function (caminho) {
+      return fetch(SUPABASE.url + '/rest/v1/' + caminho, { headers: cabecalhos, cache: 'no-cache' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('Supabase HTTP ' + r.status);
+          return r.json();
+        });
+    };
+
+    return Promise.all([
+      buscar('catalogo_config?id=eq.1&select=*'),
+      buscar('catalogo_categorias?select=*&order=ordem.asc,titulo.asc'),
+      buscar('catalogo_itens?select=*&order=ordem.asc,nome.asc'),
+      fetch(FONTE, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+    ]).then(function (respostas) {
+      var config = respostas[0][0] || {};
+      var categorias = respostas[1];
+      var itens = respostas[2];
+      var reserva = respostas[3] || {};
+
+      if (!categorias.length) throw new Error('Supabase sem categorias');
+
+      return {
+        _leiaMe: reserva._leiaMe || '',
+        vigencia: config.vigencia || '',
+        agendamento: config.agendamento || '',
+        midia: reserva.midia || {},
+        categorias: categorias.map(function (c) {
+          return {
+            id: c.id,
+            titulo: c.titulo,
+            tom: c.tom,
+            precoPartir: c.preco_partir,
+            tempo: c.tempo,
+            foto: c.foto_url || null,
+            etiqueta: c.etiqueta,
+            itens: itens.filter(function (i) { return i.categoria_id === c.id; }).map(function (i) {
+              return { nome: i.nome, preco: i.preco, duracao: i.duracao, foto: i.foto_url || null, etiqueta: i.etiqueta };
+            }),
+          };
+        }),
+      };
+    });
+  };
+
   (function carregar() {
     var grade = $('[data-categorias]');
     if (!grade) return;
 
-    fetch(FONTE, { cache: 'no-cache' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
+    carregarDoSupabase()
+      .catch(function () {
+        return fetch(FONTE, { cache: 'no-cache' }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        });
       })
       .then(function (dados) {
         catalogo(dados);

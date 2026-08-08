@@ -10,6 +10,7 @@ import { Contatos } from '@/pages/Contatos'
 import { Abertura } from '@/pages/Abertura'
 import { Videos } from '@/pages/Videos'
 import { Imagens } from '@/pages/Imagens'
+import { Catalogo } from '@/pages/Catalogo'
 import { Seo } from '@/pages/Seo'
 import { Previa } from '@/pages/Previa'
 
@@ -109,6 +110,7 @@ export default function App() {
       abertura: <Abertura />,
       videos: <Videos />,
       imagens: <Imagens />,
+      catalogo: <Catalogo />,
       seo: <Seo />,
       contatos: <Contatos />,
     }
@@ -150,6 +152,7 @@ export default function App() {
           <Route path="/abertura" element={<Abertura />} />
           <Route path="/videos" element={<Videos />} />
           <Route path="/imagens" element={<Imagens />} />
+          <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/seo" element={<Seo />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

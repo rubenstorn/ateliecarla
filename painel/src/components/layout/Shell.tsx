@@ -2,7 +2,7 @@ import * as React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, Users, Sparkles, Video, Image as ImageIcon,
-  Search, LogOut, Menu, X, ExternalLink,
+  Search, LogOut, Menu, X, ExternalLink, Tags,
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -44,6 +44,7 @@ export function Shell({ children, email, novosLeads, onSair }: ShellProps) {
     { para: '/contatos', rotulo: 'Contatos', Icone: Users, contador: novosLeads },
     { para: '/abertura', rotulo: 'Abertura', Icone: Sparkles },
     { para: '/videos', rotulo: 'Vídeos', Icone: Video },
+    { para: '/catalogo', rotulo: 'Catálogo', Icone: Tags },
     { para: '/imagens', rotulo: 'Imagens', Icone: ImageIcon },
     { para: '/seo', rotulo: 'Busca e SEO', Icone: Search },
   ]

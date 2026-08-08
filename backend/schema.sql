@@ -163,7 +163,90 @@ create trigger seo_atualizado_em
   for each row execute function public.tocar_atualizado_em();
 
 -- =============================================================
--- 5. LEADS — CRM básico
+-- 5. CATALOGO — categorias e procedimentos da tabela de preços
+--
+-- Fonte de verdade migrada de dados/catalogo.json para cá. O
+-- arquivo estático continua existindo porque é ele que o site
+-- lê (fetch direto, sem depender do Supabase no ar): rode
+-- "node ferramentas/exportar-catalogo.mjs" depois de editar no
+-- painel para regravá-lo antes de publicar.
+-- =============================================================
+
+create table if not exists public.catalogo_config (
+  id            smallint primary key default 1 check (id = 1),
+
+  vigencia      text not null default '' check (char_length(vigencia) <= 60),
+  agendamento   text not null default '' check (char_length(agendamento) <= 500),
+
+  atualizado_em timestamptz not null default now()
+);
+
+comment on table public.catalogo_config is
+  'Linha única. "vigencia" é o texto de rodapé da tabela de preços; "agendamento" é o link padrão de agendar quando a categoria não tem um próprio.';
+
+insert into public.catalogo_config (id) values (1) on conflict (id) do nothing;
+
+drop trigger if exists catalogo_config_atualizado_em on public.catalogo_config;
+create trigger catalogo_config_atualizado_em
+  before update on public.catalogo_config
+  for each row execute function public.tocar_atualizado_em();
+
+create table if not exists public.catalogo_categorias (
+  id            uuid primary key default gen_random_uuid(),
+
+  titulo        text not null check (char_length(titulo) between 1 and 120),
+  tom           text not null default 'rosa' check (tom in ('rosa', 'lilas', 'azul', 'verde', 'dourado')),
+  preco_partir  text not null default '' check (char_length(preco_partir) <= 40),
+  tempo         text not null default '' check (char_length(tempo) <= 60),
+  foto_url      text check (char_length(foto_url) <= 500),
+  etiqueta      text not null default '' check (char_length(etiqueta) <= 120),
+
+  ordem         integer not null default 0,
+
+  criado_em     timestamptz not null default now(),
+  atualizado_em timestamptz not null default now()
+);
+
+comment on table public.catalogo_categorias is
+  'Categorias da grade do catálogo (ex.: "Micropigmentação"). "tom" escolhe a cor do cartão no site.';
+
+create index if not exists catalogo_categorias_ordem_idx
+  on public.catalogo_categorias (ordem, titulo);
+
+drop trigger if exists catalogo_categorias_atualizado_em on public.catalogo_categorias;
+create trigger catalogo_categorias_atualizado_em
+  before update on public.catalogo_categorias
+  for each row execute function public.tocar_atualizado_em();
+
+create table if not exists public.catalogo_itens (
+  id            uuid primary key default gen_random_uuid(),
+  categoria_id  uuid not null references public.catalogo_categorias(id) on delete cascade,
+
+  nome          text not null check (char_length(nome) between 1 and 150),
+  preco         text not null default '' check (char_length(preco) <= 40),
+  duracao       text not null default '' check (char_length(duracao) <= 40),
+  foto_url      text check (char_length(foto_url) <= 500),
+  etiqueta      text not null default '' check (char_length(etiqueta) <= 120),
+
+  ordem         integer not null default 0,
+
+  criado_em     timestamptz not null default now(),
+  atualizado_em timestamptz not null default now()
+);
+
+comment on table public.catalogo_itens is
+  'Procedimentos dentro de uma categoria (ex.: "Microblading"). Preço e duração são texto livre porque aparecem prontos no site, sem formatação.';
+
+create index if not exists catalogo_itens_categoria_idx
+  on public.catalogo_itens (categoria_id, ordem, nome);
+
+drop trigger if exists catalogo_itens_atualizado_em on public.catalogo_itens;
+create trigger catalogo_itens_atualizado_em
+  before update on public.catalogo_itens
+  for each row execute function public.tocar_atualizado_em();
+
+-- =============================================================
+-- 6. LEADS — CRM básico
 --
 -- ATENÇÃO: esta tabela guarda dado pessoal (nome, telefone).
 -- As políticas abaixo permitem que o público INSIRA um lead mas
@@ -213,11 +296,14 @@ create trigger leads_atualizado_em
 -- lead. Nada mais.
 -- =============================================================
 
-alter table public.hero   enable row level security;
-alter table public.videos enable row level security;
-alter table public.midias enable row level security;
-alter table public.seo    enable row level security;
-alter table public.leads  enable row level security;
+alter table public.hero               enable row level security;
+alter table public.videos             enable row level security;
+alter table public.midias             enable row level security;
+alter table public.seo                enable row level security;
+alter table public.catalogo_config    enable row level security;
+alter table public.catalogo_categorias enable row level security;
+alter table public.catalogo_itens     enable row level security;
+alter table public.leads              enable row level security;
 
 -- ---- HERO ----------------------------------------------------
 
@@ -285,6 +371,44 @@ create policy "seo: leitura pública"
 drop policy if exists "seo: escrita autenticada" on public.seo;
 create policy "seo: escrita autenticada"
   on public.seo for all
+  to authenticated
+  using (true) with check (true);
+
+-- ---- CATALOGO --------------------------------------------------
+
+drop policy if exists "catalogo_config: leitura pública" on public.catalogo_config;
+create policy "catalogo_config: leitura pública"
+  on public.catalogo_config for select
+  to anon, authenticated
+  using (true);
+
+drop policy if exists "catalogo_config: escrita autenticada" on public.catalogo_config;
+create policy "catalogo_config: escrita autenticada"
+  on public.catalogo_config for all
+  to authenticated
+  using (true) with check (true);
+
+drop policy if exists "catalogo_categorias: leitura pública" on public.catalogo_categorias;
+create policy "catalogo_categorias: leitura pública"
+  on public.catalogo_categorias for select
+  to anon, authenticated
+  using (true);
+
+drop policy if exists "catalogo_categorias: escrita autenticada" on public.catalogo_categorias;
+create policy "catalogo_categorias: escrita autenticada"
+  on public.catalogo_categorias for all
+  to authenticated
+  using (true) with check (true);
+
+drop policy if exists "catalogo_itens: leitura pública" on public.catalogo_itens;
+create policy "catalogo_itens: leitura pública"
+  on public.catalogo_itens for select
+  to anon, authenticated
+  using (true);
+
+drop policy if exists "catalogo_itens: escrita autenticada" on public.catalogo_itens;
+create policy "catalogo_itens: escrita autenticada"
+  on public.catalogo_itens for all
   to authenticated
   using (true) with check (true);
 

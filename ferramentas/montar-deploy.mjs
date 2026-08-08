@@ -86,6 +86,10 @@ function passo(n, texto) {
 async function principal() {
   console.log('\nMontando a pasta de publicação\n' + '='.repeat(38))
 
+  console.log('\n[lembrete] dados/catalogo.json não se atualiza sozinho.')
+  console.log('  Se você editou preços/categorias no painel, rode antes:')
+  console.log('    node ferramentas/exportar-catalogo.mjs\n')
+
   /* ---- 1. constrói o painel ---- */
 
   passo(1, 'Construindo o painel…')
@@ -177,6 +181,11 @@ async function principal() {
   const htmlSite = await readFile(join(SAIDA, 'index.html'), 'utf8')
   if (htmlSite.includes('SEU-DOMINIO')) {
     pendencias.push('index.html ainda tem SEU-DOMINIO no lugar do domínio real.')
+  }
+  if (htmlSite.includes('SEU-PROJETO') || htmlSite.includes('COLE_AQUI_A_CHAVE_ANON')) {
+    pendencias.push('index.html ainda tem window.__SUPABASE__ sem preencher — o site ' +
+      'vai usar só dados/catalogo.json (sem refletir edições novas do painel) até você ' +
+      'colar VITE_SUPABASE_URL/VITE_SUPABASE_ANON_KEY (de painel/.env) lá. Ver dados/README.md.')
   }
 
   const catalogo = JSON.parse(await readFile(join(SAIDA, 'dados', 'catalogo.json'), 'utf8'))

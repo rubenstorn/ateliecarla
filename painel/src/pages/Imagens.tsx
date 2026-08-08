@@ -33,6 +33,10 @@ interface Grupo {
   rotulo: string
   automatico: boolean
   onde: string
+  /** proporção usada no recorte (object-fit: cover) do lugar onde a imagem entra */
+  proporcao: string
+  /** tamanho de arquivo sugerido para não sair borrado nem pesado demais */
+  tamanho: string
 }
 
 const GRUPOS: Grupo[] = [
@@ -41,24 +45,40 @@ const GRUPOS: Grupo[] = [
     rotulo: 'Galeria do site',
     automatico: true,
     onde: 'aparece na seção "antes e depois" da página',
+    proporcao: 'quadrada (1:1)',
+    tamanho: '1000×1000px',
   },
   {
     valor: 'compartilhamento',
     rotulo: 'Imagem de compartilhamento',
     automatico: false,
     onde: 'copie a URL e cole na aba Busca e SEO',
+    proporcao: 'paisagem (1200×630, fixo)',
+    tamanho: '1200×630px',
   },
   {
     valor: 'capa-categoria',
     rotulo: 'Capa de categoria',
     automatico: false,
-    onde: 'copie a URL e cole no campo "foto" em dados/catalogo.json',
+    onde: 'copie a URL e cole no campo "foto" da categoria (não do item) em dados/catalogo.json',
+    proporcao: 'faixa larga (~2:1)',
+    tamanho: '900×450px',
+  },
+  {
+    valor: 'foto-procedimento',
+    rotulo: 'Foto de procedimento',
+    automatico: false,
+    onde: 'copie a URL e cole no campo "foto" do item dentro de "itens" em dados/catalogo.json',
+    proporcao: 'quadrada (1:1)',
+    tamanho: '300×300px',
   },
   {
     valor: 'atelie',
     rotulo: 'Fotos do ateliê',
     automatico: false,
     onde: 'guardadas aqui; ainda não há seção no site que as use',
+    proporcao: 'livre — ainda sem lugar fixo no site',
+    tamanho: '1200×900px',
   },
 ]
 
@@ -68,6 +88,8 @@ const grupoDe = (valor: string): Grupo =>
     rotulo: valor,
     automatico: false,
     onde: 'grupo antigo — o site não lê',
+    proporcao: '—',
+    tamanho: '—',
   }
 
 /** tira acento e caractere estranho do nome do arquivo */
@@ -233,6 +255,14 @@ export function Imagens() {
                 ? `Publica sozinho: ${grupoDe(grupo).onde}.`
                 : `Não publica sozinho — ${grupoDe(grupo).onde}.`}
             </p>
+
+            {/* tamanho recomendado: a imagem é recortada (object-fit: cover)
+                no formato do lugar onde ela entra, então mandar fora dessa
+                proporção corta gente/detalhe sem avisar */}
+            <p className="text-xs text-muted-foreground">
+              Tamanho ideal: <span className="font-mono">{grupoDe(grupo).tamanho}</span>
+              {' · '}proporção {grupoDe(grupo).proporcao}
+            </p>
           </div>
 
           <div
@@ -301,6 +331,7 @@ export function Imagens() {
                       <p className="truncate text-sm font-medium">{m.titulo}</p>
                       <p className="font-mono text-[10px] text-muted-foreground">
                         {m.grupo}{m.largura ? ` · ${m.largura}×${m.altura}` : ''}
+                        {' · '}ideal {grupoDe(m.grupo).tamanho}
                       </p>
                       <p
                         className={cn(
