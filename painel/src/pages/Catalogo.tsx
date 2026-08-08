@@ -310,7 +310,14 @@ export function Catalogo() {
                       </p>
                     ) : (
                       daCategoria.map((i) => (
-                        <div key={i.id} className="grid gap-3 rounded-md border p-3 md:grid-cols-[1fr_140px_120px_auto]">
+                        <div key={i.id} className="grid gap-3 rounded-md border p-3 md:grid-cols-[64px_1fr_120px_100px_auto]">
+                          <div className="grid aspect-square place-items-center overflow-hidden rounded-md bg-muted">
+                            {urlPublica(i.foto_url) ? (
+                              <img src={urlPublica(i.foto_url) ?? ''} alt="" className="size-full object-cover" />
+                            ) : (
+                              <span className="font-mono text-[9px] text-muted-foreground">sem foto</span>
+                            )}
+                          </div>
                           <div className="flex flex-col gap-1.5">
                             <Label className="text-[11px]">Nome</Label>
                             <Input
@@ -318,6 +325,14 @@ export function Catalogo() {
                               maxLength={150}
                               className="h-9 text-sm"
                               onBlur={(e) => { if (e.target.value !== i.nome) alterarItem(i.id, { nome: e.target.value }) }}
+                            />
+                            <Label className="mt-1 text-[11px]">URL da foto</Label>
+                            <Input
+                              defaultValue={i.foto_url ?? ''}
+                              maxLength={500}
+                              placeholder="cole a URL copiada em Imagens"
+                              className="h-9 text-sm"
+                              onBlur={(e) => { if (e.target.value !== (i.foto_url ?? '')) alterarItem(i.id, { foto_url: e.target.value || null }) }}
                             />
                           </div>
                           <div className="flex flex-col gap-1.5">
