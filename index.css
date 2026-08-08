@@ -523,6 +523,9 @@ h1, h2, p { margin: 0; }
   box-shadow: 0 14px 28px -16px rgba(115, 76, 128, .55);
 }
 .btn-primary:active { transform: scale(.96); }
+/* sem seta/ícone à direita: padding assimétrico do CTA com seta
+   fica com o texto puxado pra esquerda — centraliza aqui */
+.btn-primary:not(:has(.botao__seta)) { justify-content: center; padding: 14px 28px; }
 
 /* CTA secundário: contorno fino, para uma ação de apoio ao lado do primário */
 .btn-secondary {
