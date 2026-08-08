@@ -785,6 +785,9 @@ h1, h2, p { margin: 0; }
   display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
+@media (min-width: 1400px) {
+  .categorias { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
 
 .card-cat {
   display: flex; flex-direction: column; overflow: hidden;

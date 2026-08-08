@@ -108,6 +108,38 @@ export interface Seo {
   canonical_url: string
 }
 
+export type TomCategoria = 'rosa' | 'lilas' | 'azul' | 'verde' | 'dourado'
+
+export const TONS_CATEGORIA: TomCategoria[] = ['rosa', 'lilas', 'azul', 'verde', 'dourado']
+
+export interface CatalogoConfig {
+  id: number
+  vigencia: string
+  agendamento: string
+}
+
+export interface CatalogoCategoria {
+  id: string
+  titulo: string
+  tom: TomCategoria
+  preco_partir: string
+  tempo: string
+  foto_url: string | null
+  etiqueta: string
+  ordem: number
+}
+
+export interface CatalogoItem {
+  id: string
+  categoria_id: string
+  nome: string
+  preco: string
+  duracao: string
+  foto_url: string | null
+  etiqueta: string
+  ordem: number
+}
+
 /** URL pública de um arquivo do bucket de mídias */
 export function urlPublica(caminho: string | null): string | null {
   if (!caminho) return null

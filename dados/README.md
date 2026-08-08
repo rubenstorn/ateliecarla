@@ -1,8 +1,17 @@
 # dados/catalogo.json — como mexer
 
-Este arquivo é a **fonte única** do catálogo. Preço, duração, nome de
-procedimento e foto: tudo se muda aqui, e o site se atualiza sozinho. Não
-existe mais lista de procedimentos dentro do `index.js`.
+O site lê este arquivo direto (fetch estático, sem depender do Supabase
+estar no ar). Não existe mais lista de procedimentos dentro do `index.js`.
+
+**A fonte de verdade agora é o painel** (aba Catálogo, editando o banco).
+Depois de editar lá, rode `node ferramentas/exportar-catalogo.mjs` para
+regravar este arquivo a partir do banco — `montar-deploy.mjs` lembra disso
+antes de publicar.
+
+Editar este JSON à mão ainda funciona (o site não distingue a origem), mas
+some na próxima exportação. Para uma mudança pontual e definitiva sem abrir
+o painel, edite aqui — só não rode o script de exportação depois, ou ele
+sobrescreve com o que estiver no banco.
 
 ## Trocar um preço
 

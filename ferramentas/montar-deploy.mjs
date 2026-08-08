@@ -86,6 +86,10 @@ function passo(n, texto) {
 async function principal() {
   console.log('\nMontando a pasta de publicação\n' + '='.repeat(38))
 
+  console.log('\n[lembrete] dados/catalogo.json não se atualiza sozinho.')
+  console.log('  Se você editou preços/categorias no painel, rode antes:')
+  console.log('    node ferramentas/exportar-catalogo.mjs\n')
+
   /* ---- 1. constrói o painel ---- */
 
   passo(1, 'Construindo o painel…')
