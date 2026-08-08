@@ -803,7 +803,10 @@ h1, h2, p { margin: 0; }
   border-color: var(--roxo);
 }
 .card-cat__corpo { display: flex; flex-direction: column; gap: 16px; flex: 1; padding: 24px; }
-.card-cat__titulo { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.card-cat__titulo {
+  margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.02em;
+  line-height: 1.3; min-height: calc(1.3em * 2);
+}
 .card-cat__meta { font-family: var(--mono); font-size: 12px; line-height: 1.6; color: var(--texto-3); }
 .card-cat__botao {
   display: inline-flex; align-items: center; gap: 8px;
